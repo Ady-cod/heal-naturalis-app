@@ -31,7 +31,7 @@ const Navbar = () => {
               </button>
               <ul className="dropdown-menu">
                 <li><a className="dropdown-item" href="#">Ayurvedic Medicine</a></li>
-                <li><a className="dropdown-item" href="#">Blood analysis through dark field microscopy & Sanum therapy</a></li>
+                <li><a className="dropdown-item" href="#">Sanum therapy & Blood analysis through dark field microscopy</a></li>
                 <li><a className="dropdown-item" href="#">Acupuncture</a></li>
                 <li><a className="dropdown-item" href="#">Massage / Touch Therapy</a></li>
                 <li><a className="dropdown-item" href="#">Crystal Therapy</a></li>
