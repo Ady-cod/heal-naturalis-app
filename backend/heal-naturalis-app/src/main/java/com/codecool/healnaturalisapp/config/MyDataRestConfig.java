@@ -1,6 +1,6 @@
 package com.codecool.healnaturalisapp.config;
 
-import com.codecool.healnaturalisapp.model.ProvidedTherapyService;
+import com.codecool.healnaturalisapp.model.Therapy;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -20,10 +20,10 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
                 HttpMethod.DELETE,
                 HttpMethod.PUT};
 
-        config.exposeIdsFor(ProvidedTherapyService.class);
+        config.exposeIdsFor(Therapy.class);
 
 
-        disableHttpMethods(ProvidedTherapyService.class, config, theUnsupportedActions);
+        disableHttpMethods(Therapy.class, config, theUnsupportedActions);
 
 
         /* Configure CORS Mapping */

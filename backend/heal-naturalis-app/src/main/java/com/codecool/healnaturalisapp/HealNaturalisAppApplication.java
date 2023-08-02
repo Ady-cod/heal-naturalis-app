@@ -11,10 +11,9 @@ public class HealNaturalisAppApplication {
 
 		Dotenv dotenv = Dotenv.load();
 		System.setProperty(Constants.DATABASE_URL, dotenv.get(Constants.DATABASE_URL));
-		// Todo continue here
-		System.setProperty("DATABASE_USERNAME", dotenv.get("DATABASE_USERNAME"));
-		System.setProperty("DATABASE_PASSWORD", dotenv.get("DATABASE_PASSWORD"));
-		System.setProperty("DATABASE_NAME", dotenv.get("DATABASE_NAME"));
+		System.setProperty(Constants.DATABASE_USERNAME, dotenv.get(Constants.DATABASE_USERNAME));
+		System.setProperty(Constants.DATABASE_PASSWORD, dotenv.get(Constants.DATABASE_PASSWORD));
+		System.setProperty(Constants.DATABASE_NAME, dotenv.get(Constants.DATABASE_NAME));
 
 
 		SpringApplication.run(HealNaturalisAppApplication.class, args);

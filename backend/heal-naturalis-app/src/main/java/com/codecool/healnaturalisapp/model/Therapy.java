@@ -7,12 +7,12 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "service")
+@Table(name = "therapies")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProvidedTherapyService {
+public class Therapy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +21,7 @@ public class ProvidedTherapyService {
     @NotNull
     private String name;
 
+    @Column(length = 2048)
     private String description;
 
     @Column(length = 2048)
