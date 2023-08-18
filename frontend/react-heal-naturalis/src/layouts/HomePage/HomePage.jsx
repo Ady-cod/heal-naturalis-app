@@ -26,7 +26,7 @@ const HomePage = () => {
       </div>
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img src="/images/books.jpg" className="d-block w-100" alt="Books" />
+          <img src="https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/carousel-images/books.jpg" className="d-block w-100" alt="Books" />
           <div className="carousel-caption ">
             <h4>Books:</h4>
             <p className="d-none d-md-block">
@@ -36,7 +36,7 @@ const HomePage = () => {
         </div>
         <div className="carousel-item">
           <img
-            src="/images/plant-extracts.jpg"
+            src="https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/carousel-images/plant-extracts.jpg"
             className="d-block w-100"
             alt="Plant Extracts"
           />
@@ -49,7 +49,7 @@ const HomePage = () => {
         </div>
         <div className="carousel-item">
           <img
-            src="/images/natural-supplements.jpg"
+            src="https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/carousel-images/natural-supplements.jpg"
             className="d-block w-100"
             alt="Natural Supplements"
           />
