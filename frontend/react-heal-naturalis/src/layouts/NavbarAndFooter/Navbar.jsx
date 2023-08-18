@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark main-color py-3">
@@ -17,7 +19,7 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNavdropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="#">Home</a>
+              <Link className="nav-link" to="/">Home</Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">Articles</a>
@@ -27,14 +29,14 @@ const Navbar = () => {
             </li>
             <li className="nav-item dropdown">
               <button className="btn nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Services
+                Therapies
               </button>
               <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#">Ayurvedic Medicine</a></li>
-                <li><a className="dropdown-item" href="#">Sanum therapy & Blood analysis through dark field microscopy</a></li>
-                <li><a className="dropdown-item" href="#">Acupuncture</a></li>
-                <li><a className="dropdown-item" href="#">Massage / Touch Therapy</a></li>
-                <li><a className="dropdown-item" href="#">Crystal Therapy</a></li>
+                <li><Link className="dropdown-item" to="/therapy/0">Ayurvedic Medicine</Link></li>
+                <li><Link className="dropdown-item" to="/therapy/1">Sanum therapy & Blood analysis through dark field microscopy</Link></li>
+                <li><Link className="dropdown-item" to="/therapy/2">Acupuncture</Link></li>
+                <li><Link className="dropdown-item" to="/therapy/3">Massage / Touch Therapy</Link></li>
+                <li><Link className="dropdown-item" to="/therapy/4">Crystal Therapy</Link></li>
               </ul>
             </li>
             <li className="nav-item dropdown">
