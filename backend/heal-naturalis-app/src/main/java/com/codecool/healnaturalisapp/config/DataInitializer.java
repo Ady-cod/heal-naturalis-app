@@ -4,6 +4,8 @@ import com.codecool.healnaturalisapp.model.Therapy;
 import com.codecool.healnaturalisapp.repository.TherapyRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +20,8 @@ import java.util.List;
 public class DataInitializer implements CommandLineRunner {
     private final TherapyRepository therapyRepository;
     private final ObjectMapper objectMapper;
+
+    private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 
     @Value("classpath:data/therapies.json")
     private Resource therapiesResource;
@@ -50,7 +54,7 @@ public class DataInitializer implements CommandLineRunner {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Unable to save therapies: " + e.getMessage());
+                logger.error("Error occurred while saving therapies", e);
             }
         }
     }
@@ -59,6 +63,7 @@ public class DataInitializer implements CommandLineRunner {
         try(InputStream inputStream = resource.getInputStream()) {
             return objectMapper.readValue(inputStream, typeReference);
         } catch (IOException e) {
+            logger.error("Unable to read json file: " + resource, e);
             throw new RuntimeException("Unable to read json file: " + resource, e);
         }
     }

@@ -11,7 +11,9 @@ This project is a full-stack web application developed using Spring Boot for the
 1. Clone the repository to your local machine.
 2. Navigate to the backend directory.
 3. Install Maven dependencies using the command: `mvn install`.
-4. Create a `.env` file in the root directory of the backend based on the provided `.env.example` file. Copy the `.env.example` file and rename the copy to `.env`. Update the values in the `.env` file to match your database configuration. Add the `.env` file to the `.gitignore` file to avoid exposing sensitive information if you decide to push your changes to a public repository.
+4. Create a `.env` file in the root directory of the backend based on the provided `.env.example` file. You can do 
+   this by copying the `.env.example` file and rename the copy to `.env`. Update the values in the `.env` file to match 
+   your database configuration.
 
 ## Usage
 
