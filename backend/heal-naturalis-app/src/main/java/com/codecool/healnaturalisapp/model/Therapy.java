@@ -35,4 +35,14 @@ public class Therapy {
 
     private String phoneNumber;
 
+    public Therapy(Therapy therapy){
+        this.id = therapy.getId();
+        this.name = therapy.getName();
+        this.description = therapy.getDescription();
+        this.imageUrl = therapy.getImageUrl();
+        this.price = therapy.getPrice();
+        this.schedule = therapy.getSchedule();
+        this.therapistName = therapy.getTherapistName();
+        this.phoneNumber = therapy.getPhoneNumber();
+    }
 }

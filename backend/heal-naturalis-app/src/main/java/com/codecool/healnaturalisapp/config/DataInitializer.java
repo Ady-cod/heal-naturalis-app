@@ -1,71 +1,56 @@
 package com.codecool.healnaturalisapp.config;
 
 import com.codecool.healnaturalisapp.model.Therapy;
-import com.codecool.healnaturalisapp.repository.TherapyRepository;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.codecool.healnaturalisapp.service.TherapyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DataAccessException;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Configuration
 public class DataInitializer implements CommandLineRunner {
-    private final TherapyRepository therapyRepository;
-    private final ObjectMapper objectMapper;
-
+    private final TherapyService therapyService;
     private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 
-    @Value("classpath:data/therapies.json")
-    private Resource therapiesResource;
+    @Value("${data.initializer.multiplyTherapies}")
+    private boolean multiplyTherapies;
 
-
-    public DataInitializer(TherapyRepository therapyRepository, ObjectMapper objectMapper) {
-        this.therapyRepository = therapyRepository;
-        this.objectMapper = objectMapper;
+    public DataInitializer(TherapyService therapyService) {
+        this.therapyService = therapyService;
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
-        if (therapyRepository.count() == 0) {
-
-            try {
-                for (int i = 0; i < 50; i++) { // Multiply by 50 to populate database for testing purposes
-
-                    // Read the JSON file and convert it into a List of Therapy objects
-                    List<Therapy> therapies = readJsonList(therapiesResource, new TypeReference<>() {
-                    });
-
-                    // Set unique values for some fields and save all therapies to the database
-                    for (Therapy therapy : therapies) {
-                        therapy.setName(therapy.getName() + " " + (i+1));
-                        therapy.setDescription(therapy.getDescription().repeat(3) );
-                        therapy.setPrice(therapy.getPrice().add(new BigDecimal(i)));
-                        therapy.setTherapistName(therapy.getTherapistName() + " " + (i+1));
-                        therapyRepository.save(therapy);
-                    }
-                }
-            } catch (Exception e) {
-                logger.error("Error occurred while saving therapies", e);
+        try {
+            if (therapyService.countTherapies() == 0) {
+                populateTherapies();
             }
+        } catch (DataAccessException e) {
+            logger.error("Error occurred while counting therapies", e);
         }
     }
 
-    private <T> List<T> readJsonList(Resource resource, TypeReference<List<T>> typeReference) {
-        try(InputStream inputStream = resource.getInputStream()) {
-            return objectMapper.readValue(inputStream, typeReference);
-        } catch (IOException e) {
-            logger.error("Unable to read json file: " + resource, e);
-            throw new RuntimeException("Unable to read json file: " + resource, e);
-        }
-    }
+    private void populateTherapies() {
+        // Read the JSON file and convert it into a List of Therapy objects
+        List<Therapy> originalTherapies = therapyService.readTherapiesFromJson();
 
+        //Check for null list or null elements in the list.If null is found, exit the method with a warning
+        if (!therapyService.validateTherapiesList(originalTherapies)) {
+            logger.warn("Therapies list is invalid, not saving to database!");
+            return;
+        }
+        // Multiply the therapies if needed according to the value of the multiplyTherapies property
+        // For testing purposes, we may want to multiply the therapies and modify some of their properties
+        List<Therapy> therapiesToSave = multiplyTherapies ?
+                therapyService.multiplyAndModifyTherapies(originalTherapies) : originalTherapies;
+
+        // Depending on the value of the multiplyTherapies property, we can choose to save the original therapies
+        // or the modified ones
+        therapyService.saveTherapiesToDatabase(therapiesToSave);
+    }
 }
