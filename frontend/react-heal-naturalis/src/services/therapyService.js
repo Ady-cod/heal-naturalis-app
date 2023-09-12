@@ -11,3 +11,20 @@ export const fetchTherapyByPage = async (page) => {
         throw error;
     }
 }
+
+export const fetchAllTherapies = async () => {
+    try {
+        // First fetch to get the total number of therapies
+        let response = await fetch(BASE_URL);
+        let data = await response.json();
+        let totalElements = data.page.totalElements;
+
+        // Second fetch to get all the therapies in one page
+        response = await fetch(`${BASE_URL}?page=0&size=${totalElements}`);
+        data = await response.json();
+        return data._embedded.therapies;
+    } catch(error) {
+        console.error("Error fetching all therapies: ", error);
+        throw error;
+    }
+}
