@@ -1,8 +1,8 @@
-const BASE_URL = 'http://localhost:8080/api/therapies';
+import { THERAPY_BASE_URL } from "../utils/constants";
 
 export const fetchTherapyByPage = async (page) => {
     try {
-        const response = await fetch(`${BASE_URL}?page=${page}&size=1`);
+        const response = await fetch(`${THERAPY_BASE_URL}?page=${page}&size=1`);
         const data = await response.json();
         const therapyObject = data._embedded.therapies[0];
         return therapyObject;
@@ -15,12 +15,12 @@ export const fetchTherapyByPage = async (page) => {
 export const fetchAllTherapies = async () => {
     try {
         // First fetch to get the total number of therapies
-        let response = await fetch(BASE_URL);
+        let response = await fetch(THERAPY_BASE_URL);
         let data = await response.json();
         let totalElements = data.page.totalElements;
 
         // Second fetch to get all the therapies in one page
-        response = await fetch(`${BASE_URL}?page=0&size=${totalElements}`);
+        response = await fetch(`${THERAPY_BASE_URL}?page=0&size=${totalElements}`);
         data = await response.json();
         return data._embedded.therapies;
     } catch(error) {
