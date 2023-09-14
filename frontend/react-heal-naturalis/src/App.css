@@ -5,20 +5,6 @@ body {
   padding: 0;
 }
 
-.main-color {
-  background: linear-gradient(to bottom, #008000,#ADFF2F);
-  color: white;
-  font:bold;
-}
-
-.main-color.navbar-dark .navbar-nav .nav-link {
-  color: #fff;
-}
-
-.navbar-brand {
-  font-size:x-large;
-}
-
 .carousel-item {
   height: 90vh;
   /* Adjust according */

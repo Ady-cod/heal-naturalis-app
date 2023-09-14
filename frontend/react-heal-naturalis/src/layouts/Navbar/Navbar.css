@@ -1,0 +1,11 @@
+.main-color {
+    background: linear-gradient(to bottom, #008000,#ADFF2F);
+}
+
+.main-color.navbar-dark .navbar-nav .nav-link {
+    color: #fff;
+}
+
+.navbar-brand {
+    font-size:x-large;
+}
