@@ -9,3 +9,7 @@
 .navbar-brand {
     font-size:x-large;
 }
+
+.dropdown-menu {
+    overflow: hidden;
+}

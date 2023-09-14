@@ -4,18 +4,23 @@ import {useEffect, useState} from "react";
 
 import {fetchAllTherapies} from "../../services/therapyService";
 
+import Loading from "../Loading/Loading";
+
 import "./Navbar.css";
 
 const Navbar = () => {
     const [therapies, setTherapies] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchTherapies = async () => {
             try {
                 const therapies = await fetchAllTherapies();
                 setTherapies(therapies);
+                setLoading(false);
             } catch (error) {
                 console.log(error);
+                setLoading(false);
             }
         }
         fetchTherapies();
@@ -52,14 +57,19 @@ const Navbar = () => {
                                 Therapies
                             </button>
                             <ul className="dropdown-menu">
-                                {therapies.map((therapy, index) => {
-                                    return (
-                                        <li key={therapy.id}>
-                                            <Link className="dropdown-item"
-                                                  to={`/therapy/${index}`}>{therapy.name}</Link>
-                                        </li>
-                                    )
-                                })}
+                                {loading ? (
+                                    <li><Loading dropdown={true} /></li>
+                                ) : (
+                                    therapies.map((therapy, index) => {
+                                        return (
+                                            <li key={therapy.id}>
+                                                <Link className="dropdown-item"
+                                                      to={`/therapy/${index}`}>{therapy.name}</Link>
+                                            </li>
+                                        )
+                                    })
+                                )
+                                }
                             </ul>
                         </li>
                         <li className="nav-item dropdown">
