@@ -4,38 +4,3 @@ body {
   margin: 0;
   padding: 0;
 }
-
-.carousel-item {
-  height: 90vh;
-  /* Adjust according */
-}
-
-.carousel-item img {
-  height: 100%;
-  object-fit: cover;
-}
-
-.carousel-caption {
-  background: rgba(100, 180, 10, 0.8);
-  border-radius: 20px;
-  color: #fff;
-}
-
-.carousel-caption p {
-  font-size: 1.5rem;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  height: 100px;
-  width: 100px;
-  box-shadow: 0 0 10px rgba(0, 100, 0, 0.5);
-  border-radius: 50%;
-  background-size: 100%, 100%;
-  background-color: rgba(0, 100, 0, 0.3);
-}
-
-.carousel-control-prev-icon:hover,
-.carousel-control-next-icon:hover {
-  background-color: rgba(0, 100, 0, 0.5);
-}

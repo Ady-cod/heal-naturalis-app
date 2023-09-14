@@ -1,4 +1,5 @@
 import "./Loading.css";
+
 import {LOADING_SPAN_COUNT} from "../../utils/constants";
 
 // The Loading component is responsible for rendering a loading animation with a set of rotating spans.

@@ -1,7 +1,9 @@
 import {useParams} from "react-router-dom";
+
 import {useEffect, useState} from "react";
 
 import {fetchTherapyByPage} from "../../services/therapyService";
+
 import "./Therapy.css";
 
 const Therapy = () => {

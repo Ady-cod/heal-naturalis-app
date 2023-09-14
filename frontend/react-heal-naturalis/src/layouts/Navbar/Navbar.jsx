@@ -1,7 +1,10 @@
 import {Link} from "react-router-dom";
-import "./Navbar.css";
+
 import {useEffect, useState} from "react";
+
 import {fetchAllTherapies} from "../../services/therapyService";
+
+import "./Navbar.css";
 
 const Navbar = () => {
     const [therapies, setTherapies] = useState([]);
