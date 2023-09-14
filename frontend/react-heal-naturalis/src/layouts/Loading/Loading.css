@@ -3,23 +3,38 @@
     --loader-color: #00ff0a;
 }
 
-.loader {
+.loader,
+.loader-dropdown {
     position: relative;
-    width: 20vw;
-    height: 50vh;
-    top: 15vh;
+    width: 15vw;
+    height: 35vh;
     margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loader {
+    top: 15vh;
 }
 
-.loader span {
+.loader span,
+.loader-dropdown span{
     position: absolute;
-    width: 100%;
-    height: 100%;
     transform: rotate(calc(18deg * var(--i)));
 }
+.loader span {
+    width: 100%;
+    height: 100%;
+}
+.loader-dropdown span {
+    width: 60%;
+    height: 60%;
+}
+
 
 /* Loader Span Before: Defines the appearance and animation of each span's before pseudo-element */
-.loader span::before {
+.loader span::before,
+.loader-dropdown span::before {
     content: "";
     position: absolute;
     width: 10%;
@@ -34,7 +49,7 @@
             0 0 3vh var(--loader-color),
             0 0 4vh var(--loader-color);
     animation: animateLoading 2s linear infinite;
-    animation-delay: calc(0.1s * var(--i));
+    animation-delay: calc(0.1s * var(--i) - 2s);
 }
 
 /* Animation Keyframes: Defines the animation cycle for the loading spans */
@@ -52,51 +67,6 @@
 .loader-text {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.5em;
-    color: var(--loader-color);
-}
-
-.loader-dropdown {
-    position: relative;
-    width: 15vw;
-    height: 30vh;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.loader-dropdown span {
-    position: absolute;
-    width: 60%;
-    height: 60%;
-    transform: rotate(calc(18deg * var(--i)));
-}
-
-/* Loader-Dropdown Span Before: Defines the appearance and animation of each span's before pseudo-element */
-.loader-dropdown span::before {
-    content: "";
-    position: absolute;
-    width: 10%;
-    height: 10%;
-    border-radius: 50%;
-    background: var(--loader-color);
-    box-shadow:
-            0 0 0.3vh var(--loader-color),
-            0 0 0.6vh var(--loader-color),
-            0 0 0.9vh var(--loader-color),
-            0 0 1.2vh var(--loader-color),
-            0 0 3vh var(--loader-color),
-            0 0 4vh var(--loader-color);
-    animation: animateLoading 2s linear infinite;
-    animation-delay: calc(0.1s * var(--i));
-}
-
-.loader-dropdown-text {
-    position: absolute;
-    top: 50%; /* Adjusted position */
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.1em;

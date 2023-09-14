@@ -14,7 +14,7 @@ const Loading = ({ dropdown }) => {
                 <span key={index} style={{ '--i': index + 1 }}></span>
             ))
             }
-            <p className={dropdown ? "loader-dropdown-text" : "loader-text"} aria-label="Loading">Loading...</p>
+            <p className="loader-text" aria-label="Loading">Loading...</p>
         </div>
     );
 }
