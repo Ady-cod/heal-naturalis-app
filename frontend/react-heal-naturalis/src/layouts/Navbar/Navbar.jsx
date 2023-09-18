@@ -5,21 +5,27 @@ import {useEffect, useState} from "react";
 import {fetchAllTherapies} from "../../services/therapyService";
 
 import Loading from "../Loading/Loading";
+import Error from "../Error/Error";
 
 import "./Navbar.css";
 
 const Navbar = () => {
     const [therapies, setTherapies] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchTherapies = async () => {
             try {
+                // Delaying the loading of the therapies by 5 seconds to demonstrate the loading animation
+                await new Promise(resolve => setTimeout(resolve, 5000));
+
                 const therapies = await fetchAllTherapies();
                 setTherapies(therapies);
-                setLoading(false);
             } catch (error) {
                 console.log(error);
+                setError("Failed to fetch therapy data list");
+            } finally {
                 setLoading(false);
             }
         }
@@ -59,6 +65,8 @@ const Navbar = () => {
                             <ul className="dropdown-menu">
                                 {loading ? (
                                     <li><Loading dropdown={true} /></li>
+                                ) : error ? (
+                                    <li><Error message={error} dropdown={true} /></li>
                                 ) : (
                                     therapies.map((therapy, index) => {
                                         return (

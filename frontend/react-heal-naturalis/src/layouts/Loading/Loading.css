@@ -1,12 +1,13 @@
 /* Root Variables: Defining global CSS variables to easily maintain and update the color scheme */
 :root {
     --loader-color: #00ff0a;
+    --i: 0;
 }
 
 .loader,
 .loader-dropdown {
     position: relative;
-    width: 15vw;
+    width: 17vw;
     height: 35vh;
     margin: auto;
     display: flex;
