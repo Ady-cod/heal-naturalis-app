@@ -3,28 +3,33 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 import {fetchAllTherapies} from "../../services/therapyService";
+import {createErrorDataObject} from "../../services/errorService";
 
 import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
+
+import {LOADING_DELAY_DURATION} from "../../utils/constants";
 
 import "./Navbar.css";
 
 const Navbar = () => {
     const [therapies, setTherapies] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [errorData, setErrorData] = useState(null);
 
     useEffect(() => {
         const fetchTherapies = async () => {
             try {
                 // Delaying the loading of the therapies by 5 seconds to demonstrate the loading animation
-                await new Promise(resolve => setTimeout(resolve, 5000));
+                await new Promise(resolve => setTimeout(resolve, LOADING_DELAY_DURATION));
 
                 const therapies = await fetchAllTherapies();
                 setTherapies(therapies);
             } catch (error) {
-                console.log(error);
-                setError("Failed to fetch therapy data list");
+                console.error(error);
+
+                const errorDataObject = createErrorDataObject(error);
+                setErrorData(errorDataObject);
             } finally {
                 setLoading(false);
             }
@@ -64,9 +69,9 @@ const Navbar = () => {
                             </button>
                             <ul className="dropdown-menu">
                                 {loading ? (
-                                    <li><Loading dropdown={true} /></li>
-                                ) : error ? (
-                                    <li><Error message={error} dropdown={true} /></li>
+                                    <li className="dropdown-item"><Loading dropdown={true} /></li>
+                                ) : errorData ? (
+                                    <li className="dropdown-item"><Error errorData={errorData} dropdown={true} /></li>
                                 ) : (
                                     therapies.map((therapy, index) => {
                                         return (

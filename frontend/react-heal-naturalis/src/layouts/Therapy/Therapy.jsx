@@ -2,10 +2,13 @@ import {useParams} from "react-router-dom";
 
 import {useEffect, useState} from "react";
 
-import {fetchTherapyByPage} from "../../services/therapyService";
+import {fetchSingleTherapyByPageIndex} from "../../services/therapyService";
+import {createErrorDataObject} from "../../services/errorService";
 
 import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
+
+import {LOADING_DELAY_DURATION} from "../../utils/constants";
 
 import "./Therapy.css";
 
@@ -13,19 +16,21 @@ const Therapy = () => {
     const {page} = useParams();
     const [therapy, setTherapy] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [errorData, setErrorData] = useState(null);
 
     useEffect(() => {
         const fetchTherapy = async () => {
             try {
                 // Delaying the loading of therapy details by 5 seconds to demonstrate the loading animation
-                await new Promise(resolve => setTimeout(resolve, 5000));
+                await new Promise(resolve => setTimeout(resolve, LOADING_DELAY_DURATION));
 
-                const therapy = await fetchTherapyByPage(page);
+                const therapy = await fetchSingleTherapyByPageIndex(page);
                 setTherapy(therapy);
             } catch (error) {
                 console.log(error);
-                setError("Failed to fetch therapy data details");
+
+                const errorDataObject = createErrorDataObject(error);
+                setErrorData(errorDataObject);
             } finally {
                 setLoading(false);
             }
@@ -37,8 +42,8 @@ const Therapy = () => {
         return <Loading />
     }
 
-    if (error) {
-        return <Error message={error} />
+    if (errorData) {
+        return <Error errorData={errorData} />
     }
 
     return (
