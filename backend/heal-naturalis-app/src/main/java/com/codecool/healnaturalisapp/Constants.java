@@ -9,4 +9,6 @@ public class Constants {
     public static final String ERROR_CODE_KEY = "error_code";
     public static final String ERROR_STATUS_KEY = "status";
     public static final String ERROR_TIMESTAMP_KEY = "timestamp";
+    public static final String [] ALLOWED_ORIGINS = {"http://localhost:3000", "http://192.168.1.164:3000", "http://192.168.1.139:3000/api"};
+
 }
