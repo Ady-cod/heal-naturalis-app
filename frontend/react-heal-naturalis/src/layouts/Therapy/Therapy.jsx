@@ -4,11 +4,12 @@ import {useEffect, useState} from "react";
 
 import {fetchSingleTherapyByPageIndex} from "../../services/therapyService";
 import {createErrorDataObject} from "../../services/errorService";
+import {createDelay} from "../../services/fetchService";
 
 import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
 
-import {LOADING_DELAY_DURATION} from "../../utils/constants";
+import {FETCH_DELAY_DURATION} from "../../utils/constants";
 
 import "./Therapy.css";
 
@@ -22,12 +23,12 @@ const Therapy = () => {
         const fetchTherapy = async () => {
             try {
                 // Delaying the loading of therapy details by 5 seconds to demonstrate the loading animation
-                await new Promise(resolve => setTimeout(resolve, LOADING_DELAY_DURATION));
+                await createDelay(FETCH_DELAY_DURATION);
 
                 const therapy = await fetchSingleTherapyByPageIndex(page);
                 setTherapy(therapy);
             } catch (error) {
-                console.log(error);
+                console.error("Error captured while fetching therapy: ",error);
 
                 const errorDataObject = createErrorDataObject(error);
                 setErrorData(errorDataObject);

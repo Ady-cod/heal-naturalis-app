@@ -4,11 +4,12 @@ import {useEffect, useState} from "react";
 
 import {fetchAllTherapies} from "../../services/therapyService";
 import {createErrorDataObject} from "../../services/errorService";
+import {createDelay} from "../../services/fetchService";
 
 import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
 
-import {LOADING_DELAY_DURATION} from "../../utils/constants";
+import {IS_DEVELOPMENT, FETCH_DELAY_DURATION} from "../../utils/constants";
 
 import "./Navbar.css";
 
@@ -20,13 +21,13 @@ const Navbar = () => {
     useEffect(() => {
         const fetchTherapies = async () => {
             try {
-                // Delaying the loading of the therapies by 5 seconds to demonstrate the loading animation
-                await new Promise(resolve => setTimeout(resolve, LOADING_DELAY_DURATION));
+                // Delaying the fetch to demonstrate the loading animation
+                await createDelay(FETCH_DELAY_DURATION);
 
                 const therapies = await fetchAllTherapies();
                 setTherapies(therapies);
             } catch (error) {
-                console.error(error);
+                console.error("Error captured while fetching therapies: ",error);
 
                 const errorDataObject = createErrorDataObject(error);
                 setErrorData(errorDataObject);
@@ -69,9 +70,9 @@ const Navbar = () => {
                             </button>
                             <ul className="dropdown-menu">
                                 {loading ? (
-                                    <li className="dropdown-item"><Loading dropdown={true} /></li>
+                                    <li className="dropdown-item"><Loading dropdown={true}/></li>
                                 ) : errorData ? (
-                                    <li className="dropdown-item"><Error errorData={errorData} dropdown={true} /></li>
+                                    <li className="dropdown-item"><Error errorData={errorData} dropdown={true}/></li>
                                 ) : (
                                     therapies.map((therapy, index) => {
                                         return (
@@ -104,6 +105,14 @@ const Navbar = () => {
                                 <li><a className="dropdown-item" href="#">Healing Crystals</a></li>
                                 <li><a className="dropdown-item" href="#">Yoga and Meditation Accessories</a></li>
                                 <li><a className="dropdown-item" href="#">Natural Home Cleaning Products</a></li>
+                                {IS_DEVELOPMENT && (
+                                    <>
+                                        <hr/>
+                                        <li><Link className="dropdown-item" to="/testServerError">Test Server
+                                            Error</Link></li>
+                                    </>
+                                )
+                                }
                             </ul>
                         </li>
                     </ul>

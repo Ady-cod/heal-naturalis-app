@@ -20,3 +20,7 @@ export const fetchWithTimeout = async (url, timeoutDuration) => {
     }
 
 }
+
+export const createDelay = (delayDuration) => {
+    return new Promise(resolve => setTimeout(resolve, delayDuration));
+}

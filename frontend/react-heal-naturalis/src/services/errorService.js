@@ -1,10 +1,11 @@
 import * as Const from "../utils/constants";
 
-const parseErrorMessage = (error) => {
+const parseErrorMessage = (errorMessage) => {
     try {
-        return JSON.parse(error.message);
+        const parsed = JSON.parse(errorMessage);
+        return parsed;
     } catch {
-        console.error(error);
+        console.error(errorMessage);
         return null;
     }
 }
