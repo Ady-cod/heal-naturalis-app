@@ -1,8 +1,8 @@
 export const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
 
 // const BASE_URL = 'http://localhost:8080/api';
-const BASE_URL = 'http://192.168.1.164:8080/api';
-// const BASE_URL = 'http://192.168.1.139:8080/api';
+// const BASE_URL = 'http://192.168.1.164:8080/api';
+const BASE_URL = 'http://192.168.1.139:8080/api';
 
 export const THERAPY_BASE_URL = `${BASE_URL}/therapies`;
 export const SERVER_ERROR_TEST_URL = `${BASE_URL}/testException`;
