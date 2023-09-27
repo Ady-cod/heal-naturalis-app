@@ -12,6 +12,7 @@ const parseErrorMessage = (errorMessage) => {
 
 const createCustomErrorObject = (error) => {
     let errorData;
+    console.log("error is " + error);
     if (error.name && (error.name === Const.ABORT_ERROR_NAME)) {
         // Detected an abort error due to a timeout
         errorData = {

@@ -22,7 +22,7 @@ const Therapy = () => {
     useEffect(() => {
         const fetchTherapy = async () => {
             try {
-                // Delaying the loading of therapy details by 5 seconds to demonstrate the loading animation
+                // Delay the fetch to demonstrate the loading animation
                 await createDelay(FETCH_DELAY_DURATION);
 
                 const therapy = await fetchSingleTherapyByPageIndex(page);
