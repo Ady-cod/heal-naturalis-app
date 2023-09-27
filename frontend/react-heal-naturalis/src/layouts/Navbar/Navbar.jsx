@@ -1,44 +1,30 @@
 import {Link} from "react-router-dom";
 
-import {useEffect, useState} from "react";
-
-import {fetchAllTherapies} from "../../services/therapyService";
-import {createErrorDataObject} from "../../services/errorService";
-import {createDelay} from "../../services/fetchService";
+import {useRef} from "react";
+import {useTherapies} from "../../hooks/useTherapies";
+import {useBootstrapCollapse} from "../../hooks/useBootstrapCollapse";
 
 import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
 
-import {IS_DEVELOPMENT, FETCH_DELAY_DURATION} from "../../utils/constants";
+import {IS_DEVELOPMENT} from "../../utils/constants";
 
 import "./Navbar.css";
 
 const Navbar = () => {
-    const [therapies, setTherapies] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [errorData, setErrorData] = useState(null);
+    const { therapies, loading, errorData } = useTherapies();
 
-    useEffect(() => {
-        const fetchTherapies = async () => {
-            try {
-                // Delaying the fetch to demonstrate the loading animation
-                await createDelay(FETCH_DELAY_DURATION);
+    // This useRef will allow us to manipulate the navbar directly using Bootstrap's Collapse class.
+    const navbarRef = useRef(null);
 
-                const therapies = await fetchAllTherapies();
-                setTherapies(therapies);
-            } catch (error) {
-                console.error("Error captured while fetching therapies: ",error);
+    const { collapseNavbar } = useBootstrapCollapse(navbarRef);
 
-                const errorDataObject = createErrorDataObject(error);
-                setErrorData(errorDataObject);
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchTherapies();
-    }, []);
+    const handleDropdownItemClick = () => {
+        collapseNavbar();
+    };
+
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark main-color py-3">
+        <nav className="navbar navbar-expand-md navbar-dark main-color py-3">
             <div className="container-fluid">
                 <span className="navbar-brand">Heal Naturalis</span>
                 <button
@@ -52,7 +38,8 @@ const Navbar = () => {
                 >
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarNavdropdown">
+                {/*<div className={isNavbarCollapsed ? "navbar-collapse collapse" : "navbar-collapse collapse show"} id="navbarNavdropdown">*/}
+                <div className="collapse navbar-collapse" id="navbarNavdropdown" ref={navbarRef}>
                     <ul className="navbar-nav">
                         <li className="nav-item">
                             <Link className="nav-link" to="/">Home</Link>
@@ -77,8 +64,11 @@ const Navbar = () => {
                                     therapies.map((therapy, index) => {
                                         return (
                                             <li key={therapy.id}>
-                                                <Link className="dropdown-item"
-                                                      to={`/therapy/${index}`}>{therapy.name}</Link>
+                                                <Link
+                                                    onClick={handleDropdownItemClick}
+                                                    className="dropdown-item"
+                                                    to={`/therapy/${index}`}>{therapy.name}
+                                                </Link>
                                             </li>
                                         )
                                     })
@@ -108,8 +98,12 @@ const Navbar = () => {
                                 {IS_DEVELOPMENT && (
                                     <>
                                         <hr/>
-                                        <li><Link className="dropdown-item" to="/testServerError">Test Server
-                                            Error</Link></li>
+                                        <li><Link
+                                            onClick={handleDropdownItemClick}
+                                            className="dropdown-item"
+                                            to="/testServerError">
+                                            Test Server Error
+                                        </Link></li>
                                     </>
                                 )
                                 }
