@@ -4,18 +4,18 @@ import { fetchAllTherapies } from '../services/therapyService';
 import { createErrorDataObject } from '../services/errorService';
 import { createDelay } from '../services/fetchService';
 
-import { FETCH_DELAY_DURATION } from '../utils/constants';
+import { IS_DEVELOPMENT } from '../utils/constants';
 
-export const useTherapies = () => {
+export const useFetchTherapies = () => {
     const [therapies, setTherapies] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(null);
     const [errorData, setErrorData] = useState(null);
 
     useEffect(() => {
         const fetchTherapies = async () => {
             try {
-                // Delaying the fetch to demonstrate the loading animation
-                await createDelay(FETCH_DELAY_DURATION);
+                setLoading(IS_DEVELOPMENT); // Set to true in development to demonstrate the loading animation
+                await createDelay(); // Delay the process to give the loading animation a chance to play
 
                 const therapies = await fetchAllTherapies();
                 setTherapies(therapies);

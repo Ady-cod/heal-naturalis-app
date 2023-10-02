@@ -1,8 +1,10 @@
 import {Link} from "react-router-dom";
 
 import {useRef} from "react";
-import {useTherapies} from "../../hooks/useTherapies";
+import {useFetchTherapies} from "../../hooks/useFetchTherapies";
 import {useBootstrapCollapse} from "../../hooks/useBootstrapCollapse";
+
+import {createDelay} from "../../services/fetchService";
 
 import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
@@ -12,7 +14,8 @@ import {IS_DEVELOPMENT} from "../../utils/constants";
 import "./Navbar.css";
 
 const Navbar = () => {
-    const { therapies, loading, errorData } = useTherapies();
+    createDelay();
+    const { therapies, loading, errorData } = useFetchTherapies();
 
     // This useRef will allow us to manipulate the navbar directly using Bootstrap's Collapse class.
     const navbarRef = useRef(null);
@@ -38,7 +41,6 @@ const Navbar = () => {
                 >
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                {/*<div className={isNavbarCollapsed ? "navbar-collapse collapse" : "navbar-collapse collapse show"} id="navbarNavdropdown">*/}
                 <div className="collapse navbar-collapse" id="navbarNavdropdown" ref={navbarRef}>
                     <ul className="navbar-nav">
                         <li className="nav-item">
@@ -61,7 +63,7 @@ const Navbar = () => {
                                 ) : errorData ? (
                                     <li className="dropdown-item"><Error errorData={errorData} dropdown={true}/></li>
                                 ) : (
-                                    therapies.map((therapy, index) => {
+                                    therapies && therapies.map((therapy, index) => {
                                         return (
                                             <li key={therapy.id}>
                                                 <Link

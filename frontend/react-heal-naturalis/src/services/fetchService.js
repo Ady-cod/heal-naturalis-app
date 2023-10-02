@@ -1,4 +1,6 @@
-export const fetchWithTimeout = async (url, timeoutDuration) => {
+import {IS_DEVELOPMENT, FETCH_DELAY_DURATION, FETCH_TIMEOUT_DURATION} from "../utils/constants";
+
+export const fetchWithTimeout = async (url, timeoutDuration = FETCH_TIMEOUT_DURATION) => {
 
     // Implementing an AbortController to cancel the fetch request if the server takes too long to respond
     const controller = new AbortController();
@@ -21,6 +23,6 @@ export const fetchWithTimeout = async (url, timeoutDuration) => {
 
 }
 
-export const createDelay = (delayDuration) => {
-    return new Promise(resolve => setTimeout(resolve, delayDuration));
+export const createDelay = (delayDuration=FETCH_DELAY_DURATION) => {
+    return (IS_DEVELOPMENT && new Promise(resolve => setTimeout(resolve, delayDuration)));
 }

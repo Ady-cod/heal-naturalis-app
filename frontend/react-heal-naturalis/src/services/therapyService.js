@@ -1,10 +1,10 @@
 import {fetchWithTimeout} from "./fetchService";
 
-import {THERAPY_BASE_URL, FETCH_TIMEOUT_DURATION} from "../utils/constants";
+import {THERAPY_BASE_URL} from "../utils/constants";
 
 export const fetchSingleTherapyByPageIndex = async (page) => {
     try {
-        const data = await fetchWithTimeout(`${THERAPY_BASE_URL}?page=${page}&size=1`, FETCH_TIMEOUT_DURATION);
+        const data = await fetchWithTimeout(`${THERAPY_BASE_URL}?page=${page}&size=1`);
         const therapyObject = data._embedded.therapies[0];
         return therapyObject;
 
@@ -17,11 +17,11 @@ export const fetchSingleTherapyByPageIndex = async (page) => {
 export const fetchAllTherapies = async () => {
     try {
         // First fetch to get the total number of therapies
-        let data = await fetchWithTimeout(THERAPY_BASE_URL, FETCH_TIMEOUT_DURATION);
+        let data = await fetchWithTimeout(THERAPY_BASE_URL);
         const totalElements = data.page.totalElements;
 
         // Second fetch to get all the therapies in one page
-        data = await fetchWithTimeout(`${THERAPY_BASE_URL}?page=0&size=${totalElements}`, FETCH_TIMEOUT_DURATION);
+        data = await fetchWithTimeout(`${THERAPY_BASE_URL}?page=0&size=${totalElements}`);
         const therapyList = data._embedded.therapies;
         return therapyList;
 

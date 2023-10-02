@@ -12,7 +12,7 @@ export const useBootstrapCollapse = (navbarRef) => {
             // Initialize a new Bootstrap Collapse instance with the reference to the navbar element
             // This is necessary for collapsing the navbar programmatically when a dropdown item is clicked
             bsCollapseRef.current = new bootstrap.Collapse(navbarRef.current, {
-                toggle: false, // The 'toggle' option is set to false to override the default behavior
+                toggle: false // The 'toggle' option is set to false to override the default behavior
             });
 
             // Cleanup function for the useEffect

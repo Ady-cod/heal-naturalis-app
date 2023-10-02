@@ -6,7 +6,7 @@ import {createErrorDataObject} from "../../services/errorService";
 import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
 
-import {SERVER_ERROR_TEST_URL, FETCH_DELAY_DURATION, FETCH_TIMEOUT_DURATION} from "../../utils/constants";
+import {SERVER_ERROR_TEST_URL, FETCH_TIMEOUT_DURATION} from "../../utils/constants";
 
 const TestServerError = () => {
     const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ const TestServerError = () => {
         const fetchServerError = async () => {
             try {
                 // Delay the fetch to demonstrate the loading animation
-                await createDelay(FETCH_DELAY_DURATION);
+                await createDelay();
 
                 const data = await fetchWithTimeout(SERVER_ERROR_TEST_URL, FETCH_TIMEOUT_DURATION);
 
