@@ -21,3 +21,15 @@
     border-radius: 0.7rem;
     white-space: normal;
 }
+
+@media (max-width: 295px) {
+    h5.alert-heading {
+        word-break: break-all;
+    }
+}
+
+@media (max-width: 150px) {
+    .alert {
+        word-break: break-all;
+    }
+}
