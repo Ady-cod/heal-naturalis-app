@@ -21,15 +21,29 @@ const Therapy = () => {
     return (
 
         <div className="container">
+            <h1 className="therapy-name">{therapy?.name}</h1>
             <div className="row">
-                <div className="col-12">
-                    <h1 className="therapy-name">{therapy?.name}</h1>
+                <div className="col-12 col-md-6">
                     <img className="therapy-image" src={therapy?.imageUrl} alt={therapy?.name}/>
+                </div>
+                <div className="col-12 col-md-6">
                     <p className="therapy-description">{therapy?.description}</p>
-                    <h2 className="therapist-name">Therapist name: {therapy?.therapistName}</h2>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-12 col-md-6">
+                    <h4 className="therapist-name">Therapist name: {therapy?.therapistName}</h4>
+                </div>
+                <div className="col-12 col-md-6 d-flex">
+                    <p className="therapy-phone ms-auto">Reserve your session on phone: {therapy?.phoneNumber}</p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-12 col-md-6">
                     <p className="therapy-schedule">Weekly schedule: {therapy?.schedule}</p>
-                    <p className="therapy-phone">Reserve your session on phone: {therapy?.phoneNumber}</p>
-                    <p className="therapy-price">Price per session: {therapy?.price} EUR</p>
+                </div>
+                <div className="col-12 col-md-6 d-flex">
+                    <p className="therapy-price ms-auto">Price per session: {therapy?.price} EUR</p>
                 </div>
             </div>
         </div>
