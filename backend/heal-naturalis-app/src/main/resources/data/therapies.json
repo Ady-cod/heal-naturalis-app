@@ -2,8 +2,8 @@
   {
     "name": "Ayurvedic Medicine",
     "description": "Lores ipsum",
-    "imageUrl": "https://www.ayurveda.com/sites/public/images/medicine.jpg?itok=Z3Z3Z3Z3",
-    "price": "1000.00",
+    "imageUrl": "https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/therapy-images/ayurveda.bmp",
+    "price": "100.00",
     "schedule": "Monday to Friday, 9AM - 5PM",
     "therapistName": "Dr. John Doe",
     "phoneNumber": "1234567890"
