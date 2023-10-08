@@ -1,0 +1,36 @@
+.container {
+    width: 100%;
+    height:80vh;
+    margin: auto;
+    padding: 4vh 2vw;
+}
+
+.therapy-name {
+    font-size: 2.25rem;
+    font-weight: bold;
+    margin-bottom: 2vh;
+    color: var(--main-color-dark);
+}
+
+.therapy-image {
+    width: 100%;
+    height: auto;
+    min-height: 75%;
+    margin-bottom: 4vh;
+}
+
+.therapy-description {
+    line-height: 1.7;
+    text-align: justify;
+}
+
+.therapy-schedule,
+.therapy-phone,
+.therapy-price {
+    font-size: 1.125rem;
+}
+
+.therapist-name {
+    font-weight: bold;
+    color: var(--main-color-dark);
+}

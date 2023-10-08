@@ -1,5 +1,12 @@
+/* Root Variables: Defining global CSS variables to easily maintain and update the color scheme */
+:root {
+    --main-color-dark: #008000;
+    --main-color-light: #ADFF2F;
+    --main-color-darker: #006400;
+}
+
 .main-color {
-    background: linear-gradient(to bottom, #008000,#ADFF2F);
+    background: linear-gradient(to bottom, var(--main-color-dark), var(--main-color-light));
 }
 
 .main-color.navbar-dark .navbar-nav .nav-link {
