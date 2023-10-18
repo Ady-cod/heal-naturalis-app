@@ -23,13 +23,19 @@
 }
 
 @media (max-width: 295px) {
-    h5.alert-heading {
+    .error {
+        margin: 0 5vw;
+    }
+}
+
+@media (max-width:250px) {
+    .error-dropdown .alert h5.alert-heading {
         word-break: break-all;
     }
 }
 
-@media (max-width: 150px) {
-    .alert {
+@media (max-width:200px) {
+    .error .alert h5.alert-heading {
         word-break: break-all;
     }
 }
