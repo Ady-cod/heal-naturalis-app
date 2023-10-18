@@ -23,27 +23,39 @@ const Therapy = () => {
         <div className="container">
             <h1 className="therapy-name">{therapy?.name}</h1>
             <div className="row">
-                <div className="col-12 col-md-6">
-                    <img className="therapy-image" src={therapy?.imageUrl} alt={therapy?.name}/>
-                </div>
-                <div className="col-12 col-md-6">
+                <div className="col-12">
+                    <img className="therapy-image float-start me-3" src={therapy?.imageUrl} alt={therapy?.name}/>
                     <p className="therapy-description">{therapy?.description}</p>
                 </div>
             </div>
-            <div className="row">
-                <div className="col-12 col-md-6">
-                    <h4 className="therapist-name">Therapist name: {therapy?.therapistName}</h4>
-                </div>
-                <div className="col-12 col-md-6 d-flex">
-                    <p className="therapy-phone ms-auto">Reserve your session on phone: {therapy?.phoneNumber}</p>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-12 col-md-6">
-                    <p className="therapy-schedule">Weekly schedule: {therapy?.schedule}</p>
-                </div>
-                <div className="col-12 col-md-6 d-flex">
-                    <p className="therapy-price ms-auto">Price per session: {therapy?.price} EUR</p>
+            <div className="card p-3 ">
+                <div className="row">
+                    <div className="col-12 col-sm-6 d-flex justify-content-center justify-content-sm-start">
+                        <h4 className="therapist-name">
+                            <img className="m-1" src="https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/icons/therapist.svg"/>
+                            {therapy?.therapistName}
+                        </h4>
+                    </div>
+                    <div className="col-12 col-sm-6 d-flex justify-content-center justify-content-sm-end">
+                    <span className="therapy-phone">
+                        <a className="btn btn-success my-auto p-0 pe-2" href={`tel:${therapy?.phoneNumber}`}>
+                            <img className="m-1" src="https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/icons/phone.svg"/>
+                            {therapy?.phoneNumber}
+                        </a>
+                    </span>
+                    </div>
+                    <div className="col-12 col-sm-6 d-flex justify-content-center justify-content-sm-start">
+                    <span className="therapy-schedule">
+                        <img className="m-1" src="https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/icons/schedule.svg"/>
+                        {therapy?.schedule}
+                    </span>
+                    </div>
+                    <div className="col-12 col-sm-6 d-flex justify-content-center justify-content-sm-end">
+                        <p className="therapy-price">
+                            <img className="m-1" src="https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/icons/euro.svg"/>
+                            {therapy?.price} / session
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
