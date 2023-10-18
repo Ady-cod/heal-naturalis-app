@@ -20,3 +20,15 @@
 .dropdown-menu {
     overflow: hidden;
 }
+
+@media (max-width: 870px) {
+    .dropdown-item {
+        white-space: normal;
+    }
+}
+
+@media (max-width: 170px) {
+    .navbar-brand {
+        white-space: normal;
+    }
+}
