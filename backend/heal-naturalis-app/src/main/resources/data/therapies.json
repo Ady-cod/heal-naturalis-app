@@ -1,11 +1,47 @@
 [
   {
     "name": "Ayurvedic Medicine",
-    "description": "Lores ipsum",
-    "imageUrl": "https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/therapy-images/ayurveda.bmp",
+    "description": "Ayurvedic medicine is one of the world’s oldest medical systems and remains one of India’s traditional health care systems. It was developed more than 3,000 years ago. It’s based on the belief that health and wellness depend on a delicate balance between the mind, body, and spirit. Its main goal is to promote good health, not fight disease. But treatments may be geared toward specific health problems. Ayurvedic treatment combines products (mainly derived from plants, but may also include animal, metal, and mineral), diet, exercise, and lifestyle.",
+    "imageUrl": "https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/therapy-images/ayurveda.avif",
     "price": "100.00",
     "schedule": "Monday to Friday, 9AM - 5PM",
     "therapistName": "Dr. John Doe",
-    "phoneNumber": "1234567890"
+    "phoneNumber": "0712345678"
+  },
+  {
+    "name": "Sanum therapy & Blood analysis through dark field microscopy",
+    "description": "Dark field microscopy and Sanum therapy offer a unique approach to blood analysis and overall health optimization. Originating from the principles of holistic medicine, this method employs dark field microscopy to examine live blood cells, providing immediate insights into one's health status. The technology allows for the visualization of microorganisms and cell structures that are often not visible with other microscopy techniques. Sanum therapy complements this by using homeopathic preparations to bring the body's internal environment into balance. The synergy of dark field microscopy and Sanum therapy aims to not only identify underlying health issues but also to restore equilibrium within the body's biological systems. Much like its counterpart, Ayurvedic medicine, the primary focus is on fostering good health and well-being, rather than merely combating diseases. Treatments often incorporate a tailored regimen of homeopathic solutions, diet adjustments, and lifestyle changes.",
+    "imageUrl": "https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/therapy-images/dark-field-microscopy.avif",
+    "price": "150.00",
+    "schedule": "Monday to Friday, 9AM - 5PM",
+    "therapistName": "Dr. Jane Doe",
+    "phoneNumber": "0712345678"
+  },
+  {
+    "name": "Acupuncture",
+    "description": "Acupuncture is an integral part of Traditional Chinese Medicine, a practice that has been cultivated for over 2,500 years. Rooted in the philosophy that health is a state of harmony between the body's vital energies, known as Qi (Chi), acupuncture seeks to restore this balance through the precise insertion of fine needles into specific points on the body. These points, known as meridians, serve as channels that facilitate the flow of Qi, thereby influencing organs, tissues, and various bodily functions. Unlike Western medical practices that primarily focus on treating symptoms, acupuncture aims to address the root causes of illness and discomfort. Treatment plans are usually customized to the individual and may include a combination of needle insertion, herbal remedies, and lifestyle adjustments. Similar to Ayurvedic medicine and other holistic visions, the emphasis is on preventive care and the promotion of holistic well-being rather than solely combating specific ailments.",
+    "imageUrl": "https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/therapy-images/acupuncture.webp",
+    "price": "120.00",
+    "schedule": "Monday to Friday, 9AM - 5PM",
+    "therapistName": "Dr. John Done",
+    "phoneNumber": "0712345678"
+  },
+  {
+    "name": "Massage / Touch Therapy",
+    "description": "Massage and Touch Therapy are time-honored techniques that tap into the body's innate ability to heal itself. Rooted in various cultural traditions, these practices have been employed for centuries to promote physical and emotional well-being. By using tactile manipulation of muscles and soft tissues, practitioners aim to alleviate tension, enhance circulation, and foster a deep sense of relaxation. Unlike medical treatments that target specific symptoms, the focus here is on creating an environment where the body can naturally recalibrate its internal systems. In a manner similar to other holistic visions, the emphasis is not solely on treating illness but on preventive care and the overall enhancement of well-being. Whether it's Swedish massage, deep tissue, or specialized modalities like reflexology, the objective is to harmonize the body and mind, paving the way for holistic health.",
+    "imageUrl": "https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/therapy-images/massage.avif",
+    "price": "80.00",
+    "schedule": "Monday to Friday, 9AM - 5PM",
+    "therapistName": "Dr. Jane Done",
+    "phoneNumber": "0712345678"
+  },
+  {
+    "name": "Crystal Therapy",
+    "description": "Crystal Therapy is a form of alternative healing that harnesses the unique vibrational energies of various crystals and gemstones to promote balance and well-being. Tracing its roots to ancient civilizations like Egypt and India, this practice is founded on the belief that crystals can interact with the body's energy fields to realign emotional and physical disharmonies. Each type of crystal is thought to possess specific frequencies and properties that can be used to target distinct concerns, from emotional stress to physical ailments. Unlike conventional medical approaches that focus on treating individual symptoms, Crystal Therapy aims to address the root causes of imbalance in a holistic manner. Treatment sessions often include the strategic placement of crystals on or around the body, guided meditation, and lifestyle recommendations to integrate the therapy's benefits into daily life.",
+    "imageUrl": "https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/therapy-images/crystal-therapy.webp",
+    "price": "80.00",
+    "schedule": "Monday to Friday, 9AM - 5PM",
+    "therapistName": "Dr. Jane Done",
+    "phoneNumber": "0712345678"
   }
 ]
