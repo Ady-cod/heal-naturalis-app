@@ -8,6 +8,7 @@
 .therapy-description {
     line-height: 1.7;
     text-align: justify;
+    margin-bottom: 0;
 }
 
 .therapy-phone,
@@ -32,6 +33,8 @@
 
 .therapy-image {
     width: 100%;
+    margin-bottom: 0.7rem;
+    padding-top: 0.5rem;
 }
 
 .therapy-phone a {
@@ -68,6 +71,7 @@
 @media (min-width: 576px) {
     .therapy-image {
         max-width: 75%;
+        margin-bottom: 0;
     }
     .therapy-phone a {
         font-size: 1.5rem;
@@ -85,6 +89,6 @@
 
 @media (min-width: 992px) {
     .therapy-image {
-        max-width: 40%;
+        max-width: 37%;
     }
 }

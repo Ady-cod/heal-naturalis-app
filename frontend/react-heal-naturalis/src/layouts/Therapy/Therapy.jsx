@@ -22,7 +22,7 @@ const Therapy = () => {
 
         <div className="container">
             <h1 className="therapy-name">{therapy?.name}</h1>
-            <div className="row">
+            <div className="row mb-3">
                 <div className="col-12">
                     <img className="therapy-image float-start me-3" src={therapy?.imageUrl} alt={therapy?.name}/>
                     <p className="therapy-description">{therapy?.description}</p>
