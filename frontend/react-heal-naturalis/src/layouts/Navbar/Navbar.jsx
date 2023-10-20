@@ -61,7 +61,7 @@ const Navbar = () => {
                                 {loading ? (
                                     <li className="dropdown-item"><Loading dropdown={true}/></li>
                                 ) : errorData ? (
-                                    <li className="dropdown-item"><Error errorData={errorData} dropdown={true}/></li>
+                                    <li className="dropdown-item error-li"><Error errorData={errorData} dropdown={true}/></li>
                                 ) : (
                                     therapies && therapies.map((therapy, index) => {
                                         return (

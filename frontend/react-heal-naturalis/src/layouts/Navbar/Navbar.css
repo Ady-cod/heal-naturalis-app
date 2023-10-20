@@ -32,3 +32,15 @@
         white-space: normal;
     }
 }
+
+/*This media query accommodates the error component to fit within its ancestor dropdown on small screens.*/
+@media (max-width: 250px) {
+    .error-li {
+        padding: 0;
+    }
+    .dropdown-menu {
+        padding: 0;
+        border-radius: 0.7rem;
+        min-width: 0;
+    }
+}
