@@ -1,6 +1,7 @@
 package com.codecool.healnaturalisapp.config;
 
 import com.codecool.healnaturalisapp.Constants;
+import com.codecool.healnaturalisapp.model.Product;
 import com.codecool.healnaturalisapp.model.Therapy;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -20,7 +21,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
                 HttpMethod.DELETE,
                 HttpMethod.PUT};
 
-        config.exposeIdsFor(Therapy.class);
+        config.exposeIdsFor(Therapy.class, Product.class);
 
 
         disableHttpMethods(Therapy.class, config, theUnsupportedActions);

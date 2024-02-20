@@ -25,7 +25,7 @@ public class GlobalRestExceptionHandler {
         // Generate a unique error ID
         UUID errorId = UUID.randomUUID();
 
-        // Create the error details map to send to the client
+        // Create the error details map to send to the user
         Map<String, Object> errorDetails = new HashMap<>();
         errorDetails.put(Constants.ERROR_TIMESTAMP_KEY, LocalDateTime.now());
         errorDetails.put(Constants.ERROR_STATUS_KEY, HttpStatus.INTERNAL_SERVER_ERROR.value());

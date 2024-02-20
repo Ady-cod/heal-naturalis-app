@@ -29,7 +29,11 @@ const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-md navbar-dark main-color py-3">
             <div className="container-fluid">
-                <span className="navbar-brand">Heal Naturalis</span>
+                <span className="navbar-brand">
+                <img src="https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/logo/logo-variant-13.png"
+                     alt="Heal Naturalis Logo"/>
+                    {/*Heal Naturalis*/}
+                </span>
                 <button
                     className="navbar-toggler"
                     type="button"

@@ -4,6 +4,7 @@ import com.codecool.healnaturalisapp.model.Therapy;
 import com.codecool.healnaturalisapp.repository.TherapyRepository;
 import com.codecool.healnaturalisapp.util.JsonReader;
 import com.fasterxml.jackson.core.type.TypeReference;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TherapyService {
     private final TherapyRepository therapyRepository;
     private final JsonReader jsonReader;
@@ -30,10 +32,6 @@ public class TherapyService {
     @Value("${data.initializer.multiplyTherapyDescription}")
     private int multiplyTherapyDescription;
 
-    public TherapyService(TherapyRepository therapyRepository, JsonReader jsonReader) {
-        this.therapyRepository = therapyRepository;
-        this.jsonReader = jsonReader;
-    }
 
     public long countTherapies() {
         try{

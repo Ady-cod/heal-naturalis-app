@@ -1,12 +1,12 @@
 export const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
 
-// const BASE_URL = 'http://localhost:8080/api';
-const BASE_URL = 'http://192.168.1.165:8080/api';
+const BASE_URL = 'http://localhost:8080/api';
+// const BASE_URL = 'http://192.168.1.165:8080/api';
 // const BASE_URL = 'http://192.168.1.139:8080/api';
 
 export const THERAPY_BASE_URL = `${BASE_URL}/therapies`;
 export const SERVER_ERROR_TEST_URL = `${BASE_URL}/testException`;
-export const FETCH_DELAY_DURATION = 3000;
+export const FETCH_DELAY_DURATION = 5000;
 export const FETCH_TIMEOUT_DURATION = 10000;
 export const LOADING_SPAN_COUNT = 20;
 

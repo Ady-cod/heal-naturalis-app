@@ -12,7 +12,6 @@ function App() {
         <>
             <Navbar/>
             <Routes>
-                {/*<Route path="/" element={<Loading/>}/>*/}
                 <Route path="/" element={<HomePage/>}/>
                 <Route path="/therapy/:page" element={<Therapy/>}/>
                 <Route path="/testServerError" element={<TestServerError/>}/>

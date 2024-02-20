@@ -1,9 +1,9 @@
 package com.codecool.healnaturalisapp.repository;
 
-import com.codecool.healnaturalisapp.model.Therapy;
+import com.codecool.healnaturalisapp.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TherapyRepository extends JpaRepository<Therapy, Long> {
+public interface UserRepository extends JpaRepository<User, Long>{
 }
