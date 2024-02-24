@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,9 +27,9 @@ public class ProductOption {
     private String name;
 
     @ManyToMany(mappedBy = "productOptions", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Product> products;
+    private List<Category> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "productOption", cascade = CascadeType.ALL)
-    private List<ProductOptionValue> productOptionValues;
+    private List<ProductOptionValue> productOptionValues = new ArrayList<>();
 
 }

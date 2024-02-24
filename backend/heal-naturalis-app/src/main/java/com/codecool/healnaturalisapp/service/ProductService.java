@@ -14,9 +14,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-    private final ProductOptionService productOptionService;
+//    private final ProductOptionService productOptionService;
     private final CategoryService categoryService;
     private final CartItemService cartItemService;
+    private final ProductOptionValueService productOptionValueService;
 
     public List<ProductDTO> getAllProductDTOsByCategoryId(long categoryId) {
         List<Product> products = productRepository.findAllByCategory_Id(categoryId);
@@ -48,9 +49,8 @@ public class ProductService {
                 .stock(product.getStock())
                 .price(product.getPrice())
                 .imageUrl(product.getImageUrl())
-                .categoryId(product.getCategory().getId())
-                .categoryName(product.getCategory().getName())
-                .productOptions(productOptionService.convertToDTO(product.getProductOptions()))
+                .category(categoryService.convertToDTO(product.getCategory()))
+                .productOptionValues(productOptionValueService.convertToDTO(product.getProductOptionValues()))
                 .cartItemsIds(product.getCartItems().stream().map(CartItem::getId).toList())
                 .build();
     }
@@ -64,8 +64,8 @@ public class ProductService {
                 .stock(productDTO.getStock())
                 .price(productDTO.getPrice())
                 .imageUrl(productDTO.getImageUrl())
-                .category(categoryService.getCategoryById(productDTO.getCategoryId()))
-                .productOptions(productOptionService.convertFromDTO(productDTO.getProductOptions()))
+                .category(categoryService.getCategoryById(productDTO.getCategory().getId()))
+                .productOptionValues(productOptionValueService.convertFromDTO(productDTO.getProductOptionValues()))
                 .cartItems(productDTO.getCartItemsIds().stream().map(cartItemService::getCartItemById).toList())
                 .build();
     }

@@ -33,11 +33,8 @@ public class Product {
     private Category category;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "products__product_options",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_option_id"))
-    private List<ProductOption> productOptions = new ArrayList<>();
+    @JoinTable
+    private List<ProductOptionValue> productOptionValues = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<CartItem> cartItems = new ArrayList<>();

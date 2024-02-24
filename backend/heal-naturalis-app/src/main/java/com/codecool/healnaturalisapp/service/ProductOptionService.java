@@ -1,28 +1,21 @@
 package com.codecool.healnaturalisapp.service;
 
 import com.codecool.healnaturalisapp.dto.ProductOptionDTO;
-import com.codecool.healnaturalisapp.model.Product;
 import com.codecool.healnaturalisapp.model.ProductOption;
 import com.codecool.healnaturalisapp.repository.ProductOptionRepository;
-import com.codecool.healnaturalisapp.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProductOptionService {
+
     private final ProductOptionRepository productOptionRepository;
-
-    private final ProductOptionValueService productOptionValueService;
-
-    private final ProductRepository productRepository;
-
-    public List<ProductOption> getAllProductOptionsByProductId(long productId) {
-        return productOptionRepository.findAllByProducts_Id(productId);
-    }
 
     public ProductOption getProductOptionById(long productOptionId) {
         return productOptionRepository.findById(productOptionId).orElse(null);
@@ -44,10 +37,6 @@ public class ProductOptionService {
         return ProductOptionDTO.builder()
                 .id(productOption.getId())
                 .name(productOption.getName())
-                .productIds(productOption.getProducts().stream()
-                        .map(Product::getId)
-                        .toList())
-                .productOptionValues(productOptionValueService.convertToDTO(productOption.getProductOptionValues()))
                 .build();
     }
 
@@ -55,27 +44,18 @@ public class ProductOptionService {
         if (productOptionDTO == null) {
             return null;
         }
-        ProductOption productOptionConverted = ProductOption.builder()
+        return ProductOption.builder()
                 .id(productOptionDTO.getId())
                 .name(productOptionDTO.getName())
-                .products(productOptionDTO.getProductIds() == null ? null : productOptionDTO.getProductIds().stream()
-                        .map(productRepository::getProductById)
-                        .toList())
-                .productOptionValues(productOptionValueService.convertFromDTO(productOptionDTO.getProductOptionValues()))
                 .build();
-        if (productOptionConverted.getProductOptionValues()!=null) {
-            productOptionConverted.getProductOptionValues()
-                    .forEach(productOptionValue -> productOptionValue.setProductOption(productOptionConverted));
-        }
-        return productOptionConverted;
     }
 
     public List<ProductOption> convertFromDTO(List<ProductOptionDTO> productOptionDTOs) {
         if (productOptionDTOs == null || productOptionDTOs.isEmpty()) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
         return productOptionDTOs.stream()
                 .map(this::convertFromDTO)
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

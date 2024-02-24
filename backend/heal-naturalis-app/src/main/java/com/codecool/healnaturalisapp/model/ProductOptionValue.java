@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "product_option_values")
 @Data
@@ -21,6 +23,9 @@ public class ProductOptionValue {
 
     @NotNull
     private String value;
+
+    @ManyToMany(mappedBy = "productOptionValues", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Product> products;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn

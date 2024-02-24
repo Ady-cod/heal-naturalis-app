@@ -15,6 +15,7 @@ import java.util.List;
 public class ProductOptionValueService {
     private final ProductOptionValueRepository productOptionValueRepository;
     private final ProductOptionRepository productOptionRepository;
+    private final ProductOptionService productOptionService;
 
     public List<ProductOptionValueDTO> getAllProductOptionValuesByProductOptionId(long productOptionId) {
         List<ProductOptionValue> productOptionValues = productOptionValueRepository.findAllByProductOptionId(productOptionId);
@@ -37,7 +38,7 @@ public class ProductOptionValueService {
         return ProductOptionValueDTO.builder()
                 .id(productOptionValue.getId())
                 .value(productOptionValue.getValue())
-                .productOptionId(productOptionValue.getProductOption().getId())
+                .productOption(productOptionService.convertToDTO(productOptionValue.getProductOption()))
                 .build();
     }
 
@@ -49,7 +50,7 @@ public class ProductOptionValueService {
                 .id(productOptionValueDTO.getId())
                 .value(productOptionValueDTO.getValue())
                 .productOption(productOptionRepository.getProductOptionById(productOptionValueDTO
-                                .getProductOptionId()))
+                                .getProductOption().getId()))
                 .build();
     }
 
