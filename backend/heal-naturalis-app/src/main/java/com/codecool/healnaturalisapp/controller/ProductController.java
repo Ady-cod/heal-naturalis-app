@@ -10,19 +10,25 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/product")
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping("/products-by-category/{categoryId}")
+    @GetMapping("/all-by-category/{categoryId}")
     public ResponseEntity<List<ProductDTO>> getAllProductsByCategoryId(@PathVariable long categoryId) {
-        System.out.println("getAllProducts() called");
-        return ResponseEntity.ok(productService.getAllProductDTOsByCategoryId(categoryId));
+        List<ProductDTO> retrievedProductDTOs = productService.getAllProductDTOsByCategoryId(categoryId);
+        return ResponseEntity.ok(retrievedProductDTOs);
     }
 
-    @PostMapping("/add-product")
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable long id) {
+        ProductDTO retrievedProductDTO = productService.getProductDTOById(id);
+        return ResponseEntity.ok(retrievedProductDTO);
+    }
+
+    @PostMapping("/add")
     public ResponseEntity<Void> addProduct(@RequestBody ProductDTO productDTO) {
-        productService.addProduct(productDTO);
+        productService.saveProduct(productDTO);
         return ResponseEntity.ok().build();
     }
 }

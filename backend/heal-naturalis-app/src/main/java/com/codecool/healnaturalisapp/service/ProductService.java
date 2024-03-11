@@ -1,81 +1,140 @@
 package com.codecool.healnaturalisapp.service;
 
 import com.codecool.healnaturalisapp.dto.ProductDTO;
-import com.codecool.healnaturalisapp.model.CartItem;
+import com.codecool.healnaturalisapp.mapper.ProductMapper;
+import com.codecool.healnaturalisapp.model.Category;
 import com.codecool.healnaturalisapp.model.Product;
+import com.codecool.healnaturalisapp.model.ProductOption;
+import com.codecool.healnaturalisapp.model.ProductOptionValue;
 import com.codecool.healnaturalisapp.repository.ProductRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
+
     private final ProductRepository productRepository;
-//    private final ProductOptionService productOptionService;
-    private final CategoryService categoryService;
-    private final CartItemService cartItemService;
+
+    private final ProductMapper productMapper;
+
+    private final ProductOptionService productOptionService;
+
     private final ProductOptionValueService productOptionValueService;
 
+    private final CategoryService categoryService;
+
+    @PersistenceContext
+    private final EntityManager entityManager;
+
     public List<ProductDTO> getAllProductDTOsByCategoryId(long categoryId) {
-        List<Product> products = productRepository.findAllByCategory_Id(categoryId);
-        return this.convertToDTO(products);
+        if (!categoryService.existsById(categoryId)) {
+            throw new EntityNotFoundException("Category with ID " + categoryId + " does not exist!");
+        }
+        List<Product> retrievedProducts = productRepository.findAllByCategory_Id(categoryId);
+        return productMapper.convertToDTO(retrievedProducts);
     }
 
-    public Product getProductById(long productOptionId) {
-        return productRepository.findById(productOptionId).orElse(null);
-    }
-    public void addProduct(ProductDTO productDTO) {
-        Product productToSave = this.convertFromDTO(productDTO);
-        productRepository.save(productToSave);
-    }
-    public List<ProductDTO> convertToDTO(List<Product> products) {
-        if (products == null || products.isEmpty()) {
-            return Collections.emptyList();
-        }
-        return products.stream()
-                .map(this::convertToDTO)
-                .toList();
+    public ProductDTO getProductDTOById(long productId) {
+        Product retrievedProduct = productRepository.findById(productId)
+                .orElseThrow(()-> new EntityNotFoundException("Product with ID " + productId + " does not exist!"));
+        return productMapper.convertToDTO(retrievedProduct);
     }
 
-    public ProductDTO convertToDTO(Product product) {
-        if (product == null) {
-            return null;
-        }
-        return ProductDTO.builder()
-                .id(product.getId())
-                .stock(product.getStock())
-                .price(product.getPrice())
-                .imageUrl(product.getImageUrl())
-                .category(categoryService.convertToDTO(product.getCategory()))
-                .productOptionValues(productOptionValueService.convertToDTO(product.getProductOptionValues()))
-                .cartItemsIds(product.getCartItems().stream().map(CartItem::getId).toList())
-                .build();
+    @Transactional
+    public void saveProduct(ProductDTO productDTO) {
+        Product convertedProduct = productMapper.convertFromDTO(productDTO);
+        syncProductOptions(convertedProduct);
+        setPersistenceContext(convertedProduct);
+        productRepository.save(convertedProduct);
     }
 
-    public Product convertFromDTO(ProductDTO productDTO) {
-        if (productDTO == null) {
-            return null;
+    private void syncProductOptions(Product product) {
+        Category category = product.getCategory();
+        List<ProductOptionValue> productOptionValues = product.getProductOptionValues();
+
+        boolean hasCategoryOptions = category != null && category.getProductOptions() != null &&
+                !category.getProductOptions().isEmpty();
+        boolean hasProductOptionValues = productOptionValues != null && !productOptionValues.isEmpty();
+
+        if (!hasCategoryOptions || !hasProductOptionValues) {
+            return;
         }
-        return Product.builder()
-                .id(productDTO.getId())
-                .stock(productDTO.getStock())
-                .price(productDTO.getPrice())
-                .imageUrl(productDTO.getImageUrl())
-                .category(categoryService.getCategoryById(productDTO.getCategory().getId()))
-                .productOptionValues(productOptionValueService.convertFromDTO(productDTO.getProductOptionValues()))
-                .cartItems(productDTO.getCartItemsIds().stream().map(cartItemService::getCartItemById).toList())
-                .build();
+        productOptionValues.stream()
+                .filter(productOptionValue -> productOptionValue != null && productOptionValue.getProductOption() != null)
+                .forEach(productOptionValue -> {
+                    coordinateCategoryAndValueOptions(productOptionValue, category);
+                });
     }
 
-    public List<Product> convertFromDTO(List<ProductDTO> productDTOs) {
-        if (productDTOs == null || productDTOs.isEmpty()) {
-            return Collections.emptyList();
+    private void coordinateCategoryAndValueOptions(ProductOptionValue productOptionValue, Category category) {
+        ProductOption optionForValue = productOptionValue.getProductOption();
+        String optionName = optionForValue.getName();
+
+        // Attempt to find an existing option by name within the category
+        Optional<ProductOption> existingCategoryOption = category.getProductOptions().stream()
+                .filter(option -> option.getName().equals(optionName))
+                .findFirst();
+
+        // Retrieve the option by name from the database
+        ProductOption optionWithNameInDatabase = productOptionService.getProductOptionByName(optionName);
+
+        ProductOption optionToUse;
+
+        if (existingCategoryOption.isEmpty()) {
+            // Use the option from the database if it exists; otherwise, merge the new one
+            optionToUse = optionWithNameInDatabase == null ? entityManager.merge(optionForValue) : optionWithNameInDatabase;
+            category.addProductOption(optionToUse);
+        } else {
+            ProductOption optionForCategory = existingCategoryOption.get();
+
+            if (optionWithNameInDatabase != null && optionWithNameInDatabase.getId() != optionForCategory.getId()) {
+                // If the existing category option doesn't match the one in the database by ID, update the category's option list
+                category.getProductOptions().remove(optionForCategory);
+                optionToUse = optionWithNameInDatabase.getId() == optionForValue.getId() ? entityManager.merge(optionForValue) : optionWithNameInDatabase;
+                category.addProductOption(optionToUse);
+            } else {
+                optionToUse = optionForCategory;
+            }
         }
-        return productDTOs.stream()
-                .map(this::convertFromDTO)
-                .toList();
+
+        // Associate the ProductOptionValue with the determined ProductOption
+        productOptionValue.setProductOption(optionToUse);
     }
+
+    private void setPersistenceContext(Product product) {
+        if (product != null) {
+            if (product.getCategory() != null) {
+                Category category = product.getCategory();
+                categoryService.setPersistenceContext(category);
+                if (category.getId() != 0 && categoryService.existsById(category.getId())) {
+                    Category managedCategory = entityManager.merge(category);
+                    product.setCategory(managedCategory);
+                }
+            }
+            if (product.getProductOptionValues() != null && !product.getProductOptionValues().isEmpty()) {
+                List<ProductOptionValue> managedProductOptionValues = new ArrayList<>();
+                for (ProductOptionValue productOptionValue : product.getProductOptionValues()) {
+                    productOptionValueService.setPersistenceContext(productOptionValue);
+                    if (productOptionValue.getId() != 0 &&
+                            productOptionValueService.existsById(productOptionValue.getId())) {
+                        ProductOptionValue managedProductOptionValue = entityManager.merge(productOptionValue);
+                        managedProductOptionValues.add(managedProductOptionValue);
+                    } else {
+                        managedProductOptionValues.add(productOptionValue);
+                    }
+                }
+                product.setProductOptionValues(managedProductOptionValues);
+            }
+        }
+    }
+
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CartItemService {
+
     private final CartItemRepository cartItemRepository;
 
     public CartItem getCartItemById(long cartItemId) {

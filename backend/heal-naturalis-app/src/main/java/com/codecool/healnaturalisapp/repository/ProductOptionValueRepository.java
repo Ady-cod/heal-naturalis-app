@@ -10,5 +10,4 @@ import java.util.List;
 public interface ProductOptionValueRepository extends JpaRepository<ProductOptionValue, Long> {
     List<ProductOptionValue> findAllByProductOptionId(long productOptionId);
 
-    ProductOptionValue getProductOptionValueById(long id);
 }
