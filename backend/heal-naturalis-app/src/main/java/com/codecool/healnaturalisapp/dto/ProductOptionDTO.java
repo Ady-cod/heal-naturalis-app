@@ -1,5 +1,6 @@
 package com.codecool.healnaturalisapp.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ public class ProductOptionDTO {
 
     private long id;
 
+    @NotNull(message = "Product option name cannot be null")
     private String name;
 
 }

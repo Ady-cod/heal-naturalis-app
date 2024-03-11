@@ -22,13 +22,13 @@ public class ProductOptionValue {
     private long id;
 
     @NotNull
+    @Column(unique = true)
     private String value;
-
-    @ManyToMany(mappedBy = "productOptionValues", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Product> products;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn
     private ProductOption productOption;
 
+    @ManyToMany(mappedBy = "productOptionValues", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Product> products;
 }

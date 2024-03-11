@@ -17,11 +17,11 @@ public class UserDTO {
 
     private long id;
 
-@Email (message = "Invalid email format")
-@NotBlank (message = "Email cannot be blank")
+@Email (message = "Invalid User email format")
+@NotBlank (message = "User email cannot be blank")
     private String email;
 
-@NotBlank (message = "Password cannot be blank")
+@NotBlank (message = "User password cannot be blank")
     private String password;
 
 private List<Long> cartIds;

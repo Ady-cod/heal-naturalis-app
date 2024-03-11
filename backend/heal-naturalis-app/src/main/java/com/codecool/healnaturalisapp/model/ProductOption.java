@@ -22,7 +22,7 @@ public class ProductOption {
     @GeneratedValue
     private long id;
 
-    @NotNull
+    @NotNull(message = "Product option name cannot be null")
     @Column(unique = true)
     private String name;
 
