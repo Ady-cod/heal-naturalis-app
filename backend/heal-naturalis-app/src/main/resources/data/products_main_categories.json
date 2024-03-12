@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Books",
+    "imageUrl": "https://example.com/books.jpg"
+  },
+  {
+    "name": "Plant Extracts",
+    "imageUrl": "https://example.com/plant_extracts.jpg"
+  },
+  {
+    "name": "Herbs and Spices",
+    "imageUrl": "https://example.com/herbs_and_spices.jpg"
+  },
+  {
+    "name": "Herbal Teas",
+    "imageUrl": "https://example.com/herbal_teas.jpg"
+  },
+  {
+    "name": "Natural supplements",
+    "imageUrl": "https://example.com/natural_supplements.jpg"
+  },
+  {
+    "name": "Essential Oils",
+    "imageUrl": "https://example.com/essential_oils.jpg"
+  },
+  {
+    "name": "Organic Foods",
+    "imageUrl": "https://example.com/organic_foods.jpg"
+  },
+  {
+    "name": "Eco-friendly Beauty Products",
+    "imageUrl": "https://example.com/eco-friendly_beauty_products.jpg"
+  },
+  {
+    "name": "Natural Skincare Products",
+    "imageUrl": "https://example.com/natural_skincare_products.jpg"
+  },
+  {
+    "name": "Holistic Wellness Kits",
+    "imageUrl": "https://example.com/holistic_wellness_kits.jpg"
+  },
+  {
+    "name": "Healing Crystals",
+    "imageUrl": "https://example.com/healing_crystals.jpg"
+  },
+  {
+    "name": "Yoga and Meditation Accessories",
+    "imageUrl": "https://example.com/yoga_and_meditation_accessories.jpg"
+  },
+  {
+    "name": "Natural Home Cleaning Products",
+    "imageUrl": "https://example.com/natural_home_cleaning_products.jpg"
+  }
+]
