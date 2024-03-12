@@ -26,11 +26,14 @@ public class TherapyService {
     @Value("classpath:data/therapies.json")
     private Resource therapiesResource;
 
-    @Value("${data.initializer.multiplier}")
+    @Value("${therapy.initializer.isMultiplyingTherapies}")
+    private boolean isMultiplyingTherapies;
+
+    @Value("${application.multiplier}")
     private int multiplier;
 
-    @Value("${data.initializer.multiplyTherapyDescription}")
-    private int multiplyTherapyDescription;
+    @Value("${therapy.initializer.descriptionMultiplier}")
+    private int descriptionMultiplier;
 
 
     public long countTherapies() {
@@ -42,7 +45,7 @@ public class TherapyService {
         }
     }
 
-    public List<Therapy> readTherapiesFromJson() {
+    private List<Therapy> readTherapiesFromJson() {
         List<Therapy> originalTherapies;
         try {
             // Read the JSON file and convert it into a List of Therapy objects
@@ -55,7 +58,7 @@ public class TherapyService {
         return originalTherapies;
     }
 
-    public boolean validateTherapiesList(List<Therapy> therapies) {
+    private boolean validateTherapiesList(List<Therapy> therapies) {
         // Check if the therapies list is null or contains null values and log a warning if so
         if (therapies == null || therapies.contains(null)) {
             logger.warn("Therapies list is null or contains null values!");
@@ -64,7 +67,7 @@ public class TherapyService {
         return true;
     }
 
-    public List<Therapy> multiplyAndModifyTherapies(List<Therapy> originalTherapies) {
+    private List<Therapy> multiplyAndModifyTherapies(List<Therapy> originalTherapies) {
         List<Therapy> therapies = new ArrayList<>();
         try {
             for (int i = 0; i < multiplier; i++) { // Multiply with the multiplier value to populate database for testing purposes
@@ -74,7 +77,7 @@ public class TherapyService {
                 for (Therapy originalTherapy : originalTherapies) {
                     Therapy therapy = new Therapy(originalTherapy);
                     therapy.setName(therapy.getName() + " " + (i + 1));
-                    therapy.setDescription(therapy.getDescription().repeat(multiplyTherapyDescription));
+                    therapy.setDescription(therapy.getDescription().repeat(descriptionMultiplier));
                     therapy.setPrice(therapy.getPrice().add(new BigDecimal(i)));
                     therapy.setTherapistName(therapy.getTherapistName() + " " + (i + 1));
                     therapies.add(therapy);
@@ -86,11 +89,30 @@ public class TherapyService {
         return therapies;
     }
 
-    public void saveTherapiesToDatabase(List<Therapy> therapies) {
+    private void saveTherapiesToDatabase(List<Therapy> therapies) {
         try {
             therapyRepository.saveAll(therapies);
         } catch (DataAccessException e) {
             logger.error("Error occurred while saving therapies", e);
         }
+    }
+
+    public void populateTherapies() {
+        // Read the JSON file and convert it into a List of Therapy objects
+        List<Therapy> originalTherapies = readTherapiesFromJson();
+
+        //Check for null list or null elements in the list.If null is found, exit the method with a warning
+        if (! validateTherapiesList(originalTherapies)) {
+            logger.warn("Therapies list is invalid, not saving to database!");
+            return;
+        }
+        // Multiply the therapies if needed according to the value of the multiplyTherapies property
+        // For testing purposes, we may want to multiply the therapies and modify some of their properties
+        List<Therapy> therapiesToSave = isMultiplyingTherapies ?
+                multiplyAndModifyTherapies(originalTherapies) : originalTherapies;
+
+        // Depending on the value of the multiplyTherapies property, we can choose to save the original therapies
+        // or the modified ones
+        saveTherapiesToDatabase(therapiesToSave);
     }
 }
