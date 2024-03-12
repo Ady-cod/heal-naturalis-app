@@ -25,6 +25,7 @@ public class Category {
 
     @NotNull(message = "Category name cannot be null")
     @Size(min = 2, max = 50, message = "Category name must be between 2 and 50 characters")
+    @Column(unique = true)
     private String name;
 
     @URL(message = "Invalid Category image URL format")

@@ -50,6 +50,10 @@ public class CategoryService {
         return categoryRepository.existsById(id);
     }
 
+    public boolean existsByName(String name) {
+        return categoryRepository.existsByName(name);
+    }
+
     @Transactional
     public void saveCategory(CategoryDTO categoryDTO) {
         Category convertedCategory = categoryMapper.convertFromDTO(categoryDTO);
