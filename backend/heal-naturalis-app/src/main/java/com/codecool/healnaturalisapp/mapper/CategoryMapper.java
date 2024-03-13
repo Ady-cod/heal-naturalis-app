@@ -50,4 +50,6 @@ public abstract class CategoryMapper {
         }
         return categoryRepository.findAllById(categoryIds);
     }
+
+    public abstract List<Category> convertFromDTO(List<CategoryDTO> categoryDTOs);
 }

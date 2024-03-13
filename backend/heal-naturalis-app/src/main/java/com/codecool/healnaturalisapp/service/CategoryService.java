@@ -5,10 +5,16 @@ import com.codecool.healnaturalisapp.mapper.CategoryMapper;
 import com.codecool.healnaturalisapp.model.Category;
 import com.codecool.healnaturalisapp.model.ProductOption;
 import com.codecool.healnaturalisapp.repository.CategoryRepository;
+import com.codecool.healnaturalisapp.util.JsonReader;
+import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +29,19 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    private final CategoryMapper categoryMapper;
-
     private final ProductOptionService productOptionService;
+
+    private final CategoryMapper categoryMapper;
 
     @PersistenceContext
     private final EntityManager entityManager;
+
+    private final JsonReader jsonReader;
+
+    private static final Logger logger = LoggerFactory.getLogger(CategoryService.class);
+
+    @Value("classpath:data/products_main_categories.json")
+    private Resource mainCategoriesResource;
 
     public List<CategoryDTO> getAllMainCategories() {
         List<Category> mainCategories = categoryRepository.findAllByParentCategoryIsNull();
@@ -111,6 +124,37 @@ public class CategoryService {
             }
         }
         return managedOptions;
+    }
+
+    public long countCategories() {
+        return categoryRepository.count();
+    }
+
+    private List<Category> readMainCategoriesFromJson() {
+        List<Category> mainCategories = jsonReader.readJsonList(mainCategoriesResource, new TypeReference<>() {
+        });
+        if (mainCategories == null || mainCategories.isEmpty()) {
+            logger.warn("No main categories found in the JSON file!");
+            return new ArrayList<>();
+        }
+        return mainCategories;
+    }
+
+    private boolean validateMainCategoriesList(List<Category> mainCategories) {
+        if (mainCategories == null || mainCategories.contains(null)) {
+            logger.warn("Main categories list is null or contains null values!");
+            return false;
+        }
+        return true;
+    }
+
+    public void populateMainCategories() {
+        List<Category> mainCategories = readMainCategoriesFromJson();
+        if (! validateMainCategoriesList(mainCategories)) {
+            logger.warn("Main categories list is invalid, not saving to database!");
+            return;
+        }
+        categoryRepository.saveAll(mainCategories);
     }
 
 }
