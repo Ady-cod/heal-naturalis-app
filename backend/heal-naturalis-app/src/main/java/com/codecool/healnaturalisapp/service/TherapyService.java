@@ -19,7 +19,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TherapyService {
+
     private final TherapyRepository therapyRepository;
+
     private final JsonReader jsonReader;
     private static final Logger logger = LoggerFactory.getLogger(TherapyService.class);
 
