@@ -1,0 +1,282 @@
+[
+  {
+    "imageUrl": "https://example.com/rubin.jpg",
+    "category": {
+      "name": "Rubin",
+      "imageUrl": "https://example.com/rubin.jpg",
+      "parentCategoryId": 11
+    },
+    "productOptionValues": [
+      {
+        "value": "Red",
+        "productOption": {
+          "name": "Color"
+        }
+      },
+      {
+        "value": "10 g",
+        "productOption": {
+          "name": "Weight"
+        }
+      },
+      {
+        "value": "2 x 3 cm",
+        "productOption": {
+          "name": "Size"
+        }
+      }
+    ]
+  },
+  {
+    "imageUrl": "https://example.com/turquoise.jpg",
+    "category": {
+      "name": "Turquoise",
+      "imageUrl": "https://example.com/turquoise.jpg",
+      "parentCategoryId": 11
+    },
+    "productOptionValues": [
+      {
+        "value": "Blue",
+        "productOption": {
+          "name": "Color"
+        }
+      },
+      {
+        "value": "15 g",
+        "productOption": {
+          "name": "Weight"
+        }
+      },
+      {
+        "value": "3 x 3 cm",
+        "productOption": {
+          "name": "Size"
+        }
+      }
+    ]
+  },
+  {
+    "imageUrl": "https://example.com/amethyst.jpg",
+    "category": {
+      "name": "Amethyst",
+      "imageUrl": "https://example.com/amethyst.jpg",
+      "parentCategoryId": 11
+    },
+    "productOptionValues": [
+      {
+        "value": "Purple",
+        "productOption": {
+          "name": "Color"
+        }
+      },
+      {
+        "value": "20 g",
+        "productOption": {
+          "name": "Weight"
+        }
+      },
+      {
+        "value": "4 x 3 cm",
+        "productOption": {
+          "name": "Size"
+        }
+      }
+    ]
+  },
+  {
+    "imageUrl": "https://example.com/quartz.jpg",
+    "category": {
+      "name": "Quartz",
+      "imageUrl": "https://example.com/quartz.jpg",
+      "parentCategoryId": 11
+    },
+    "productOptionValues": [
+      {
+        "value": "Clear",
+        "productOption": {
+          "name": "Color"
+        }
+      },
+      {
+        "value": "25 g",
+        "productOption": {
+          "name": "Weight"
+        }
+      },
+      {
+        "value": "5 x 3 cm",
+        "productOption": {
+          "name": "Size"
+        }
+      }
+    ]
+  },
+  {
+    "imageUrl": "https://example.com/citrine.jpg",
+    "category": {
+      "name": "Citrine",
+      "imageUrl": "https://example.com/citrine.jpg",
+      "parentCategoryId": 11
+    },
+    "productOptionValues": [
+      {
+        "value": "Yellow",
+        "productOption": {
+          "name": "Color"
+        }
+      },
+      {
+        "value": "10 g",
+        "productOption": {
+          "name": "Weight"
+        }
+      },
+      {
+        "value": "3 x 1 cm",
+        "productOption": {
+          "name": "Size"
+        }
+      }
+    ]
+  },
+  {
+    "imageUrl": "https://example.com/jasper.jpg",
+    "category": {
+      "name": "Jasper",
+      "imageUrl": "https://example.com/jasper.jpg",
+      "parentCategoryId": 11
+    },
+    "productOptionValues": [
+      {
+        "value": "Red",
+        "productOption": {
+          "name": "Color"
+        }
+      },
+      {
+        "value": "30 g",
+        "productOption": {
+          "name": "Weight"
+        }
+      },
+      {
+        "value": "3 x 4 cm",
+        "productOption": {
+          "name": "Size"
+        }
+      }
+    ]
+  },
+  {
+    "imageUrl": "https://example.com/moonstone.jpg",
+    "category": {
+      "name": "Moonstone",
+      "imageUrl": "https://example.com/moonstone.jpg",
+      "parentCategoryId": 11
+    },
+    "productOptionValues": [
+      {
+        "value": "White",
+        "productOption": {
+          "name": "Color"
+        }
+      },
+      {
+        "value": "18 g",
+        "productOption": {
+          "name": "Weight"
+        }
+      },
+      {
+        "value": "3 x 3 cm",
+        "productOption": {
+          "name": "Size"
+        }
+      }
+    ]
+  },
+  {
+    "imageUrl": "https://example.com/obsidian.jpg",
+    "category": {
+      "name": "Obsidian",
+      "imageUrl": "https://example.com/obsidian.jpg",
+      "parentCategoryId": 11
+    },
+    "productOptionValues": [
+      {
+        "value": "Black",
+        "productOption": {
+          "name": "Color"
+        }
+      },
+      {
+        "value": "22 g",
+        "productOption": {
+          "name": "Weight"
+        }
+      },
+      {
+        "value": "4 x 2 cm",
+        "productOption": {
+          "name": "Size"
+        }
+      }
+    ]
+  },
+  {
+    "imageUrl": "https://example.com/sapphire.jpg",
+    "category": {
+      "name": "Sapphire",
+      "imageUrl": "https://example.com/sapphire.jpg",
+      "parentCategoryId": 11
+    },
+    "productOptionValues": [
+      {
+        "value": "Deep Blue",
+        "productOption": {
+          "name": "Color"
+        }
+      },
+      {
+        "value": "12 g",
+        "productOption": {
+          "name": "Weight"
+        }
+      },
+      {
+        "value": "2 x 3 cm",
+        "productOption": {
+          "name": "Size"
+        }
+      }
+    ]
+  },
+  {
+    "imageUrl": "https://example.com/emerald.jpg",
+    "category": {
+      "name": "Emerald",
+      "imageUrl": "https://example.com/emerald.jpg",
+      "parentCategoryId": 11
+    },
+    "productOptionValues": [
+      {
+        "value": "Green",
+        "productOption": {
+          "name": "Color"
+        }
+      },
+      {
+        "value": "16 g",
+        "productOption": {
+          "name": "Weight"
+        }
+      },
+      {
+        "value": "4 x 2 cm",
+        "productOption": {
+          "name": "Size"
+        }
+      }
+    ]
+  }
+]

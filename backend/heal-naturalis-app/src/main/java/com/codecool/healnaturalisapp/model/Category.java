@@ -36,7 +36,7 @@ public class Category {
     private Category parentCategory;
 
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
-    private List<Category> subCategories ;
+    private List<Category> subCategories = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable

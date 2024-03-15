@@ -157,4 +157,7 @@ public class CategoryService {
         categoryRepository.saveAll(mainCategories);
     }
 
+    public Category getCategoryByName(String name) {
+        return categoryRepository.findByName(name);
+    }
 }

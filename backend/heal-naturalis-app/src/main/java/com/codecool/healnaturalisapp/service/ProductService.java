@@ -7,10 +7,16 @@ import com.codecool.healnaturalisapp.model.Product;
 import com.codecool.healnaturalisapp.model.ProductOption;
 import com.codecool.healnaturalisapp.model.ProductOptionValue;
 import com.codecool.healnaturalisapp.repository.ProductRepository;
+import com.codecool.healnaturalisapp.util.JsonReader;
+import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +41,16 @@ public class ProductService {
     @PersistenceContext
     private final EntityManager entityManager;
 
+    private final JsonReader jsonReader;
+
+    @Value("classpath:data/products.json")
+    private Resource productsResource;
+
+    @Value("${application.multiplier}")
+    private int multiplier;
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+
     public List<ProductDTO> getAllProductDTOsByCategoryId(long categoryId) {
         if (!categoryService.existsById(categoryId)) {
             throw new EntityNotFoundException("Category with ID " + categoryId + " does not exist!");
@@ -45,7 +61,7 @@ public class ProductService {
 
     public ProductDTO getProductDTOById(long productId) {
         Product retrievedProduct = productRepository.findById(productId)
-                .orElseThrow(()-> new EntityNotFoundException("Product with ID " + productId + " does not exist!"));
+                .orElseThrow(() -> new EntityNotFoundException("Product with ID " + productId + " does not exist!"));
         return productMapper.convertToDTO(retrievedProduct);
     }
 
@@ -70,9 +86,7 @@ public class ProductService {
         }
         productOptionValues.stream()
                 .filter(productOptionValue -> productOptionValue != null && productOptionValue.getProductOption() != null)
-                .forEach(productOptionValue -> {
-                    coordinateCategoryAndValueOptions(productOptionValue, category);
-                });
+                .forEach(productOptionValue -> coordinateCategoryAndValueOptions(productOptionValue, category));
     }
 
     private void coordinateCategoryAndValueOptions(ProductOptionValue productOptionValue, Category category) {
@@ -135,6 +149,117 @@ public class ProductService {
                 product.setProductOptionValues(managedProductOptionValues);
             }
         }
+    }
+
+    public long countProducts() {
+        return productRepository.count();
+    }
+
+    private List<ProductDTO> readProductsFromJson() {
+        List<ProductDTO> originalProducts = jsonReader.readJsonList(productsResource, new TypeReference<>() {
+        });
+        if (originalProducts == null || originalProducts.isEmpty()) {
+            logger.warn("No products were found in the JSON file!");
+            return new ArrayList<>();
+        }
+        return originalProducts;
+    }
+
+    private boolean validateProductsList(List<ProductDTO> products) {
+        if (products == null || products.contains(null)) {
+            logger.warn("Products list is null or contains null values!");
+            return false;
+        }
+        return true;
+    }
+
+    private List<ProductDTO> multiplyAndModifyProducts(List<ProductDTO> originalProducts) {
+        List<ProductDTO> products = new ArrayList<>();
+        // we create a random value between 0-100 including 0 and 100 to add for the stock and price
+        try {
+            for (int i = 0; i < multiplier; i++) {
+                int randomStockValue = (int) (Math.random() * 99)+1;
+                double randomPriceValue = (double) Math.round((Math.random() * 99 + 1) * 100) /100;
+                for (ProductDTO originalProduct : originalProducts) {
+                    ProductDTO product = ProductDTO.builder()
+                            .stock(originalProduct.getStock() + randomStockValue)
+                            .price(originalProduct.getPrice() + randomPriceValue)
+                            .imageUrl(originalProduct.getImageUrl())
+                            .category(originalProduct.getCategory())
+                            .productOptionValues(originalProduct.getProductOptionValues())
+                            .build();
+                    products.add(product);
+                }
+            }
+        } catch (NullPointerException | IndexOutOfBoundsException | ArithmeticException e) {
+            logger.error("Error occurred while modifying and multiplying products", e);
+            throw e;
+        }
+        return products;
+    }
+
+    private void saveProcessedProductsFromJson(List<ProductDTO> products) {
+        List<Product> convertedProducts = productMapper.convertFromDTO(products);
+        for (Product product : convertedProducts) {
+            Category category = product.getCategory();
+            List<ProductOptionValue> productOptionValues = product.getProductOptionValues();
+            List<ProductOptionValue> managedProductOptionValues = new ArrayList<>();
+            Category managedCategory;
+
+            for (ProductOptionValue productOptionValue : productOptionValues) {
+                ProductOption optionForValue = productOptionValue.getProductOption();
+                ProductOption optionToBeShared;
+                ProductOptionValue managedProductOptionValue;
+                ProductOption managedOption;
+
+                if (!categoryService.existsByName(category.getName())) {
+                    if (productOptionService.existsByName(optionForValue.getName())) {
+                        ProductOption existingOption = productOptionService.getProductOptionByName(optionForValue.getName());
+                        optionToBeShared = entityManager.merge(existingOption);
+                    } else {
+                        optionToBeShared = entityManager.merge(optionForValue);
+                    }
+                    category.addProductOption(optionToBeShared);
+                }
+
+                if (productOptionValueService.existsByValue(productOptionValue.getValue())) {
+                    ProductOptionValue existingProductOptionValue = productOptionValueService.getProductOptionValueByValue(productOptionValue.getValue());
+                    managedProductOptionValue = entityManager.merge(existingProductOptionValue);
+                    managedProductOptionValues.add(managedProductOptionValue);
+                } else {
+                    if (productOptionService.existsByName(optionForValue.getName())) {
+                        ProductOption existingOption = productOptionService.getProductOptionByName(optionForValue.getName());
+                        managedOption = entityManager.merge(existingOption);
+                    } else {
+                        managedOption = entityManager.merge(optionForValue);
+                    }
+                    productOptionValue.setProductOption(managedOption);
+                    managedProductOptionValue = entityManager.merge(productOptionValue);
+                    managedProductOptionValues.add(managedProductOptionValue);
+                }
+            }
+
+            if (categoryService.existsByName(category.getName())) {
+                Category existingCategory = categoryService.getCategoryByName(category.getName());
+                managedCategory = entityManager.merge(existingCategory);
+            } else {
+                managedCategory = entityManager.merge(category);
+            }
+            product.setCategory(managedCategory);
+            product.setProductOptionValues(managedProductOptionValues);
+        }
+        productRepository.saveAll(convertedProducts);
+    }
+
+    @Transactional
+    public void populateProducts() {
+        List<ProductDTO> originalProducts = readProductsFromJson();
+        if (!validateProductsList(originalProducts)) {
+            logger.warn("Products list is invalid, not saving to database!");
+            return;
+        }
+        List<ProductDTO> modifiedProducts = multiplyAndModifyProducts(originalProducts);
+        saveProcessedProductsFromJson(modifiedProducts);
     }
 
 }

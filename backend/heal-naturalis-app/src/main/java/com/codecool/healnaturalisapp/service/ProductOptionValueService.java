@@ -45,6 +45,10 @@ public class ProductOptionValueService {
         return productOptionValueRepository.existsById(id);
     }
 
+    public boolean existsByValue(String value) {
+        return productOptionValueRepository.existsByValue(value);
+    }
+
     @Transactional
     public void saveProductOptionValue(ProductOptionValueDTO productOptionValueDTO) {
         ProductOptionValue convertedProductOptionValue = productOptionValueMapper.convertFromDTO(productOptionValueDTO);
@@ -63,4 +67,7 @@ public class ProductOptionValueService {
         }
     }
 
+    public ProductOptionValue getProductOptionValueByValue(String value) {
+        return productOptionValueRepository.findByValue(value);
+    }
 }

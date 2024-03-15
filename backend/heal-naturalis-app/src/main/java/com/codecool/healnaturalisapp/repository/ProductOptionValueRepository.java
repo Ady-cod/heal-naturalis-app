@@ -10,4 +10,7 @@ import java.util.List;
 public interface ProductOptionValueRepository extends JpaRepository<ProductOptionValue, Long> {
     List<ProductOptionValue> findAllByProductOptionId(long productOptionId);
 
+    boolean existsByValue(String value);
+
+    ProductOptionValue findByValue(String value);
 }

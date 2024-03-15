@@ -42,4 +42,6 @@ public abstract class ProductMapper {
         return cartItemRepository.findAllById(idList);
     }
 
+    public abstract List<Product> convertFromDTO(List<ProductDTO> productDTOs);
+
 }
