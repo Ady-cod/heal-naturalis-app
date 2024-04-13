@@ -15,7 +15,7 @@ import "./Navbar.css";
 
 const Navbar = () => {
     createDelay();
-    const { therapies, loading, errorData } = useFetchTherapies();
+    const { therapies, isLoading, errorData } = useFetchTherapies();
 
     // This useRef will allow us to manipulate the navbar directly using Bootstrap's Collapse class.
     const navbarRef = useRef(null);
@@ -62,7 +62,7 @@ const Navbar = () => {
                                 Therapies
                             </button>
                             <ul className="dropdown-menu">
-                                {loading ? (
+                                {isLoading ? (
                                     <li className="dropdown-item"><Loading dropdown={true}/></li>
                                 ) : errorData ? (
                                     <li className="dropdown-item error-li"><Error errorData={errorData} dropdown={true}/></li>

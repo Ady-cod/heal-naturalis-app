@@ -8,13 +8,13 @@ import { IS_DEVELOPMENT } from '../utils/constants';
 
 export const useFetchTherapies = () => {
     const [therapies, setTherapies] = useState([]);
-    const [loading, setLoading] = useState(null);
+    const [isLoading, setIsLoading] = useState(null);
     const [errorData, setErrorData] = useState(null);
 
     useEffect(() => {
         const fetchTherapies = async () => {
             try {
-                setLoading(IS_DEVELOPMENT); // Set to true in development to demonstrate the loading animation
+                setIsLoading(IS_DEVELOPMENT); // Set to true in development to demonstrate the loading animation
                 await createDelay(); // Delay the process to give the loading animation a chance to play
 
                 const therapies = await fetchAllTherapies();
@@ -25,13 +25,12 @@ export const useFetchTherapies = () => {
                 const errorDataObject = createErrorDataObject(error);
                 setErrorData(errorDataObject);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         }
         fetchTherapies();
 
     }, []);
 
-    return { therapies, loading, errorData };
-
+    return { therapies, isLoading, errorData };
 };
