@@ -7,14 +7,14 @@ import { createDelay } from '../services/fetchService';
 import { IS_DEVELOPMENT } from '../utils/constants';
 
 export const useFetchTherapies = () => {
-    const [therapies, setTherapies] = useState([]);
-    const [isLoading, setIsLoading] = useState(null);
-    const [errorData, setErrorData] = useState(null);
+    const [therapies, setTherapies] = useState(null);
+    const [isLoadingTherapies, setIsLoadingTherapies] = useState(null);
+    const [errorTherapiesData, setErrorTherapiesData] = useState(null);
 
     useEffect(() => {
         const fetchTherapies = async () => {
             try {
-                setIsLoading(IS_DEVELOPMENT); // Set to true in development to demonstrate the loading animation
+                setIsLoadingTherapies(IS_DEVELOPMENT); // Set to true in development to demonstrate the loading animation
                 await createDelay(); // Delay the process to give the loading animation a chance to play
 
                 const therapies = await fetchAllTherapies();
@@ -23,14 +23,14 @@ export const useFetchTherapies = () => {
                 console.error("Error captured while fetching therapies: ", error);
 
                 const errorDataObject = createErrorDataObject(error);
-                setErrorData(errorDataObject);
+                setErrorTherapiesData(errorDataObject);
             } finally {
-                setIsLoading(false);
+                setIsLoadingTherapies(false);
             }
         }
         fetchTherapies();
 
     }, []);
 
-    return { therapies, isLoading, errorData };
+    return { therapies, isLoadingTherapies, errorTherapiesData };
 };

@@ -9,13 +9,13 @@ import {IS_DEVELOPMENT} from "../utils/constants";
 
 export const useFetchTherapy = (page) => {
     const [therapy, setTherapy] = useState(null);
-    const [loading, setLoading] = useState(null);
+    const [isLoading, setIsLoading] = useState(null);
     const [errorData, setErrorData] = useState(null);
 
     useEffect(()=> {
         const fetchTherapy = async () => {
             try {
-                setLoading(IS_DEVELOPMENT); // Set to true in development to demonstrate the loading animation
+                setIsLoading(IS_DEVELOPMENT); // Set to true in development to demonstrate the loading animation
                 await createDelay(); // Delay the process to give the loading animation a chance to play
 
                 const therapyObject = await fetchSingleTherapyByPageIndex(page);
@@ -26,12 +26,12 @@ export const useFetchTherapy = (page) => {
                 const errorDataObject = createErrorDataObject(error);
                 setErrorData(errorDataObject);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
         fetchTherapy();
     },[page]);
 
-    return {therapy, loading, errorData};
+    return {therapy, isLoading, errorData};
 
 };

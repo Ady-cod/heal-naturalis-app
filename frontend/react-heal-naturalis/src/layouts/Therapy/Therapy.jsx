@@ -8,9 +8,9 @@ import "./Therapy.css";
 
 const Therapy = () => {
     const {page} = useParams();
-    const {therapy, loading, errorData} = useFetchTherapy(page);
+    const {therapy, isLoading, errorData} = useFetchTherapy(page);
 
-    if (loading) {
+    if (isLoading) {
         return <Loading/>
     }
 
