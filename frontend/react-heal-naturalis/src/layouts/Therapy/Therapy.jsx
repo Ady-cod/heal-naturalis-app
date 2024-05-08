@@ -1,14 +1,17 @@
 import {useParams} from "react-router-dom";
-import {useFetchTherapy} from "../../hooks/useFetchTherapy";
+
+import {useFetchItemById} from "../../hooks/useFetchItemById";
 
 import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
 
+import {THERAPY_BASE_URL} from "../../utils/constants";
+
 import "./Therapy.css";
 
 const Therapy = () => {
-    const {page} = useParams();
-    const {therapy, isLoading, errorData} = useFetchTherapy(page);
+    const {therapyId} = useParams();
+    const {item:therapy, isLoading, errorData} = useFetchItemById(THERAPY_BASE_URL, therapyId);
 
     if (isLoading) {
         return <Loading/>

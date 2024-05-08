@@ -1,25 +1,25 @@
 import {Link} from "react-router-dom";
 
 import {useRef} from "react";
-import {useFetchTherapies} from "../../hooks/useFetchTherapies";
-import {useBootstrapCollapse} from "../../hooks/useBootstrapCollapse";
 
-import {createDelay} from "../../services/fetchService";
+import {useBootstrapCollapse} from "../../hooks/useBootstrapCollapse";
+import {useFetchItems} from "../../hooks/useFetchItems";
 
 import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
 
-import {IS_DEVELOPMENT} from "../../utils/constants";
+import {IS_DEVELOPMENT, THERAPY_BASE_URL, MAIN_CATEGORIES_URL} from "../../utils/constants";
 
 import "./Navbar.css";
 
 const Navbar = () => {
-    const { therapies, isLoadingTherapies, errorTherapiesData } = useFetchTherapies();
+    const {items:therapies, isLoading:isLoadingTherapies, errorData:errorTherapiesData} = useFetchItems(THERAPY_BASE_URL, true, "therapies");
+    const {items:mainCategories, isLoading:isLoadingCategories, errorData:errorCategoriesData} = useFetchItems(MAIN_CATEGORIES_URL);
 
     // This useRef will allow us to manipulate the navbar directly using Bootstrap's Collapse class.
     const navbarRef = useRef(null);
 
-    const { collapseNavbar } = useBootstrapCollapse(navbarRef);
+    const {collapseNavbar} = useBootstrapCollapse(navbarRef);
 
     const handleDropdownItemClick = () => {
         collapseNavbar();
@@ -53,7 +53,7 @@ const Navbar = () => {
                             <a className="nav-link" href="#">Articles</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Comunity</a>
+                            <a className="nav-link" href="#">Community</a>
                         </li>
                         <li className="nav-item dropdown">
                             <button className="btn nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -64,7 +64,8 @@ const Navbar = () => {
                                 {isLoadingTherapies ? (
                                     <li className="dropdown-item"><Loading isDropdown={true}/></li>
                                 ) : errorTherapiesData ? (
-                                    <li className="dropdown-item error-li"><Error errorData={errorTherapiesData} isDropdown={true}/></li>
+                                    <li className="dropdown-item error-li"><Error errorData={errorTherapiesData}
+                                                                                  isDropdown={true}/></li>
                                 ) : (
                                     therapies && therapies.map((therapy, index) => {
                                         return (
@@ -72,7 +73,7 @@ const Navbar = () => {
                                                 <Link
                                                     onClick={handleDropdownItemClick}
                                                     className="dropdown-item"
-                                                    to={`/therapy/${index}`}>{therapy.name}
+                                                    to={`/therapy/${therapy.id}`}>{therapy.name}
                                                 </Link>
                                             </li>
                                         )
@@ -87,19 +88,27 @@ const Navbar = () => {
                                 Products
                             </button>
                             <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">Books</a></li>
-                                <li><a className="dropdown-item" href="#">Plant Extracts</a></li>
-                                <li><a className="dropdown-item" href="#">Herbs and Spices</a></li>
-                                <li><a className="dropdown-item" href="#">Herbal Teas</a></li>
-                                <li><a className="dropdown-item" href="#">Natural supplements</a></li>
-                                <li><a className="dropdown-item" href="#">Essential Oils</a></li>
-                                <li><a className="dropdown-item" href="#">Organic Foods</a></li>
-                                <li><a className="dropdown-item" href="#">Eco-friendly Beauty Products</a></li>
-                                <li><a className="dropdown-item" href="#">Natural Skincare Products</a></li>
-                                <li><a className="dropdown-item" href="#">Holistic Wellness Kits</a></li>
-                                <li><a className="dropdown-item" href="#">Healing Crystals</a></li>
-                                <li><a className="dropdown-item" href="#">Yoga and Meditation Accessories</a></li>
-                                <li><a className="dropdown-item" href="#">Natural Home Cleaning Products</a></li>
+                                {isLoadingCategories ? (
+                                    <li className="dropdown-item"><Loading isDropdown={true}/></li>
+                                ) : errorCategoriesData ? (
+                                    <li className="dropdown-item error-li"><Error errorData={errorCategoriesData}
+                                                                                  isDropdown={true}/></li>
+                                ) : (
+                                    mainCategories && mainCategories.map((category) => {
+                                        return (
+                                            <li key={category.id}>
+                                                <Link
+                                                    onClick={handleDropdownItemClick}
+                                                    className="dropdown-item"
+                                                    to={category.subCategoryIds.length > 0 ?
+                                                        `/sub-categories/${category.id}` :
+                                                        `/category-products/${category.id}`}>{category.name}
+                                                </Link>
+                                            </li>
+                                        )
+                                    })
+                                )
+                                }
                                 {IS_DEVELOPMENT && (
                                     <>
                                         <hr/>

@@ -1,7 +1,6 @@
 package com.codecool.healnaturalisapp.config;
 
 import com.codecool.healnaturalisapp.Constants;
-import com.codecool.healnaturalisapp.model.Product;
 import com.codecool.healnaturalisapp.model.Therapy;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -21,10 +20,14 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
                 HttpMethod.DELETE,
                 HttpMethod.PUT};
 
-        config.exposeIdsFor(Therapy.class, Product.class);
+        config.exposeIdsFor(Therapy.class);
 
 
         disableHttpMethods(Therapy.class, config, theUnsupportedActions);
+
+        // Set page size to Integer.MAX_VALUE, so that we can get all data at once by default
+        config.setDefaultPageSize(Integer.MAX_VALUE);
+        config.setMaxPageSize(Integer.MAX_VALUE);
 
 
         /* Configure CORS Mapping */
@@ -37,9 +40,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
                                     HttpMethod[] theUnsupportedActions) {
         config.getExposureConfiguration()
                 .forDomainType(theClass)
-                .withItemExposure((metdata, httpMethods) ->
+                .withItemExposure((metadata, httpMethods) ->
                         httpMethods.disable(theUnsupportedActions))
-                .withCollectionExposure((metdata, httpMethods) ->
+                .withCollectionExposure((metadata, httpMethods) ->
                         httpMethods.disable(theUnsupportedActions));
     }
 }

@@ -5,9 +5,19 @@ const BASE_URL = 'http://localhost:8080/api';
 // const BASE_URL = 'http://192.168.1.139:8080/api';
 
 export const THERAPY_BASE_URL = `${BASE_URL}/therapies`;
+
 export const SERVER_ERROR_TEST_URL = `${BASE_URL}/testException`;
+
+export const CATEGORY_BASE_URL = `${BASE_URL}/category`;
+export const MAIN_CATEGORIES_URL = `${CATEGORY_BASE_URL}/all-main`;
+export const SUB_CATEGORIES_URL = `${CATEGORY_BASE_URL}/all-sub`;
+
+const PRODUCT_BASE_URL = `${BASE_URL}/product`;
+export const PRODUCTS_BY_CATEGORY_URL = `${PRODUCT_BASE_URL}/all-by-category`;
+
 export const FETCH_DELAY_DURATION = 5000;
 export const FETCH_TIMEOUT_DURATION = 10000;
+
 export const LOADING_SPAN_COUNT = 20;
 
 export const ABORT_ERROR_NAME = "AbortError";

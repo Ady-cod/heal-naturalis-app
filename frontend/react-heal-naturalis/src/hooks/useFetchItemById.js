@@ -1,27 +1,25 @@
 import {useEffect, useState} from "react";
 
-import {createDelay} from "../services/fetchService";
-import {fetchSingleTherapyByPageIndex} from "../services/therapyService";
+import {createDelay, fetchWithTimeout} from "../services/fetchService";
 import {createErrorDataObject} from "../services/errorService";
 
 import {IS_DEVELOPMENT} from "../utils/constants";
 
-
-export const useFetchTherapy = (page) => {
-    const [therapy, setTherapy] = useState(null);
+export const useFetchItemById = (itemUrl, itemId) => {
+    const [item, setItem] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
     const [errorData, setErrorData] = useState(null);
 
     useEffect(()=> {
-        const fetchTherapy = async () => {
+        const fetchItemById = async () => {
             try {
                 setIsLoading(IS_DEVELOPMENT); // Set to true in development to demonstrate the loading animation
                 await createDelay(); // Delay the process to give the loading animation a chance to play
 
-                const therapyObject = await fetchSingleTherapyByPageIndex(page);
-                setTherapy(therapyObject);
+                const itemData = await fetchWithTimeout(`${itemUrl}/${itemId}`);
+                setItem(itemData);
             } catch (error) {
-                console.error("Error captured while fetching therapy: ", error);
+                console.error("Error captured while fetching item: ", error);
 
                 const errorDataObject = createErrorDataObject(error);
                 setErrorData(errorDataObject);
@@ -29,9 +27,8 @@ export const useFetchTherapy = (page) => {
                 setIsLoading(false);
             }
         };
-        fetchTherapy();
-    },[page]);
+        fetchItemById();
+    },[itemUrl, itemId]);
 
-    return {therapy, isLoading, errorData};
-
+    return {item, isLoading, errorData};
 };

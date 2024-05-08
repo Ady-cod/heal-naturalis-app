@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/category")
@@ -15,10 +16,9 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @PostMapping("/add")
-    public ResponseEntity<Void> saveCategory(@RequestBody CategoryDTO categoryDTO) {
-        categoryService.saveCategory(categoryDTO);
-        return ResponseEntity.ok().build();
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable long id) {
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
     @GetMapping("/all-main")
@@ -29,5 +29,11 @@ public class CategoryController {
     @GetMapping("/all-sub/{parentId}")
     public ResponseEntity<List<CategoryDTO>> getAllSubCategories(@PathVariable long parentId) {
         return ResponseEntity.ok(categoryService.getAllSubCategories(parentId));
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Void> saveCategory(@RequestBody CategoryDTO categoryDTO) {
+        categoryService.saveCategory(categoryDTO);
+        return ResponseEntity.ok().build();
     }
 }

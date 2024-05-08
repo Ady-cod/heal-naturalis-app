@@ -42,6 +42,12 @@ public class CategoryService {
 
     @Value("classpath:data/products_main_categories.json")
     private Resource mainCategoriesResource;
+    
+    public CategoryDTO getCategoryById(long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category with ID " + id + " not found!"));
+        return categoryMapper.convertToDTO(category);
+    }
 
     public List<CategoryDTO> getAllMainCategories() {
         List<Category> mainCategories = categoryRepository.findAllByParentCategoryIsNull();
