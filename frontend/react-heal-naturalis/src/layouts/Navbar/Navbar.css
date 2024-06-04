@@ -1,9 +1,9 @@
-/* Root Variables: Defining global CSS variables to easily maintain and update the color scheme */
-:root {
-    --main-color-dark: #008000;
-    --main-color-light: #ADFF2F;
-    --main-color-darker: #006400;
+.sticky-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
 }
+
 
 .main-color {
     background: linear-gradient(to bottom, var(--main-color-dark), var(--main-color-light));
@@ -49,5 +49,26 @@ nav .navbar-brand img {
         padding: 0;
         border-radius: 0.7rem;
         min-width: 0;
+    }
+}
+
+.cart {
+    margin-right: 3rem;
+    position: relative;
+}
+
+.cart-badge {
+    background-color: red;
+    border-radius: 50%;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.7rem;
+    position: absolute;
+    top: -0.5rem;
+    right: -0.6rem;
+}
+
+@media (max-width: 767px) {
+    .cart {
+        width: 1.6rem;
     }
 }

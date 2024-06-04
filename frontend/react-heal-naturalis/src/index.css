@@ -1,3 +1,10 @@
+/* Root Variables: Defining global CSS variables to easily maintain and update the color scheme */
+:root {
+  --main-color-dark: #008000;
+  --main-color-light: #ADFF2F;
+  --main-color-darker: #006400;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

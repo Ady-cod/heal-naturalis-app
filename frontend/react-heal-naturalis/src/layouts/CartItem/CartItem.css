@@ -1,0 +1,8 @@
+.card .euro-icon {
+    font-size: 0.9rem;
+}
+
+.cart-item-buttons {
+    display: flex;
+    align-items: center;
+}

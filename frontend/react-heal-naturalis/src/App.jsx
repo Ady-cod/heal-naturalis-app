@@ -6,6 +6,7 @@ import Therapy from "./layouts/Therapy/Therapy";
 import TestServerError from "./layouts/TestServerError/TestServerError";
 import SubCategories from "./layouts/SubCategories/SubCategories";
 import CategoryProducts from "./layouts/CategoryProducts/CategoryProducts";
+import Cart from "./layouts/Cart/Cart";
 
 import "./App.css";
 
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/testServerError" element={<TestServerError/>}/>
                 <Route path="/sub-categories/:parentCategoryId" element={<SubCategories/>}/>
                 <Route path="/category-products/:categoryId" element={<CategoryProducts/>}/>
+                <Route path="/cart" element={<Cart/>}/>
             </Routes>
         </>
     );

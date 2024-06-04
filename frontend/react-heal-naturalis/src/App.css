@@ -4,3 +4,30 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.container-centered-text {
+  text-align: center;
+}
+
+.container-centered-text ul  {
+  text-align: left;
+  padding-left: 40%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card {
+  /*#636496*/
+  /*#ffd418*/
+  border: 5px solid #96cb63;
+  border-radius: 1rem;
+  color: var(--main-color-darker);
+}
+
+.category-products-title,
+.sub-categories-title {
+  color: var(--main-color-dark);
+  font-weight: bold;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}

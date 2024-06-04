@@ -22,7 +22,7 @@ const SubCategories = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container container-centered-text">
             <h2 className="sub-categories-title">Subcategories for: {parentCategory?.name}</h2>
             <div className="row">
                 {subCategories && subCategories.map((category) => (

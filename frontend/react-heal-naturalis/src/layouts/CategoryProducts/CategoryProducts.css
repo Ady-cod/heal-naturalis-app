@@ -1,3 +1,11 @@
 .price-icon {
     height: 1.1rem;
 }
+
+.alert-container {
+    position: fixed;
+    top: 5rem;
+    right: 1rem;
+    z-index: 1080;
+}
+

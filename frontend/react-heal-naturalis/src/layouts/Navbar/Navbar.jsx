@@ -4,6 +4,7 @@ import {useRef} from "react";
 
 import {useBootstrapCollapse} from "../../hooks/useBootstrapCollapse";
 import {useFetchItems} from "../../hooks/useFetchItems";
+import {useCartContext} from "../../hooks/useCartContext";
 
 import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
@@ -13,6 +14,7 @@ import {IS_DEVELOPMENT, THERAPY_BASE_URL, MAIN_CATEGORIES_URL} from "../../utils
 import "./Navbar.css";
 
 const Navbar = () => {
+    const {totalProducts} = useCartContext();
     const {items:therapies, isLoading:isLoadingTherapies, errorData:errorTherapiesData} = useFetchItems(THERAPY_BASE_URL, true, "therapies");
     const {items:mainCategories, isLoading:isLoadingCategories, errorData:errorCategoriesData} = useFetchItems(MAIN_CATEGORIES_URL);
 
@@ -26,7 +28,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="navbar navbar-expand-md navbar-dark main-color py-3">
+        <nav className="navbar navbar-expand-md navbar-dark main-color py-3 sticky-navbar">
             <div className="container-fluid">
                 <span className="navbar-brand">
                 <img src="https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/logo/logo-variant-13.png"
@@ -125,7 +127,13 @@ const Navbar = () => {
                         </li>
                     </ul>
                     <ul className="navbar-nav ms-auto">
-                        <li className="nav-item m-1">
+                        <li className="nav-item cart">
+                            <Link className="nav-link" to="/cart">
+                                <i className="fas fa-shopping-cart"></i>
+                                {totalProducts > 0 && <span className="cart-badge">{totalProducts}</span>}
+                            </Link>
+                        </li>
+                        <li className="nav-item">
                             <a type="button" className="btn btn-outline-light" href="#">Sign in</a>
                         </li>
                     </ul>
