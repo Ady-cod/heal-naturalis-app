@@ -16,10 +16,22 @@ This project is a full-stack web application developed using Spring Boot for the
 - **Therapies Section Implementation**: Developed the therapies section's backend, including the model, repository, and service for therapy objects. Implemented a method to populate the database with therapy objects from a JSON file, leveraging Data Rest's underlying functionalities for object manipulation (without the need for dedicated controllers).
 - **Frontend Development for Therapies Section**: Created all necessary frontend components and methods to handle calls for therapy objects. Implemented functionality to display therapy options in a dropdown menu, with full details accessible upon selecting an option.
 - **User Interface and Experience Enhancements**: Introduced an Error component and a Loading component to manage errors and delays in data fetching efficiently. Ensured the website's behavior is fully responsive, providing an optimal user experience across different devices.
+- **Shopping Cart and UI Enhancements**: Implemented a shopping cart feature with the following details:
+   - Created a custom context and hook (`useCartContext`) to manage the shopping cart state.
+   - Added a shopping cart icon to the Navbar using Font Awesome to track added products.
+   - Made the Navbar sticky for easier user access.
+   - Developed a `Cart` component and associated `Cart.css` for styling the cart.
+   - Developed a `CartItem` component and associated `CartItem.css` for styling individual cart items.
+   - Created a reusable custom hook (`useSaveToLocalStorage`) for saving the cart context in local storage.
+   - Improved the display of product cards with enhanced CSS styling.
+   - Introduced alert notifications for the "Add to Cart" button.
+   - Refactored CSS by relocating some styles to higher-level files like `App.css` and `index.css`.
 
 ### Next Steps
 
-- **Products Section Development**: Initial groundwork laid out for the Products section, including the creation of models and a method for populating the database with product entries. Upcoming tasks include developing the necessary frontend components for fetching and displaying Products/Categories from the database, enhancing the site's content and user interaction capabilities.
+- **User Authentication**: Implement a login system to authenticate users, allowing them to securely access the checkout process.
+- **Checkout Process**: Enable the "Proceed to Checkout" functionality for authenticated users.
+- **Spring Security with JWT**: Integrate Spring Security with JWT to enhance the secure access for the authenticated user.
 
 ## Installation
 
