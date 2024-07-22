@@ -24,7 +24,7 @@ export const CartProvider = ({children}) => {
 // save cart to local storage when the cart changes
     useSaveToLocalStorage("cart", cart, shouldSaveCart);
 
-    const addToCart = (product) => {
+    const addToCart = (product, indexInCategory) => {
         setCart(prev => {
             const itemContainingProduct = prev.cartItems.find(item => item.product.id === product.id);
             if (itemContainingProduct) {
@@ -34,9 +34,9 @@ export const CartProvider = ({children}) => {
                 };
             }
             if (prev.status === null) {
-                return {...prev, status: "OPEN", cartItems: [{product, quantity: 1}]};
+                return {...prev, status: "OPEN", cartItems: [{product, quantity: 1, indexInCategory}]};
             }
-            return {...prev, cartItems: [...prev.cartItems, {product, quantity: 1}]};
+            return {...prev, cartItems: [...prev.cartItems, {product, quantity: 1, indexInCategory}]};
         });
     };
 

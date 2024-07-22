@@ -9,7 +9,7 @@ const CartItem = ({item}) => {
             <div className="card-body">
                 <div className="row">
                     <div className="col-md-8">
-                        <h5 className="card-title">{item.product?.category.name}</h5>
+                        <h5 className="card-title">{item.product?.category.name} {item?.indexInCategory + 1}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">
                             Price: <i className="euro-icon fas fa-euro"></i> {item.product?.price}
                         </h6>

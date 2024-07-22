@@ -69,7 +69,7 @@ const Navbar = () => {
                                     <li className="dropdown-item error-li"><Error errorData={errorTherapiesData}
                                                                                   isDropdown={true}/></li>
                                 ) : (
-                                    therapies && therapies.map((therapy, index) => {
+                                    therapies && therapies.map((therapy) => {
                                         return (
                                             <li key={therapy.id}>
                                                 <Link

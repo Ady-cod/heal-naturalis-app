@@ -31,7 +31,7 @@ const CategoryProducts = () => {
     };
 
     const handleAddToCart = (product, index) => {
-        addToCart(product);
+        addToCart(product, index);
         addAlert(`${product.category.name} ${index+1} added to cart`);
     };
 
@@ -59,7 +59,8 @@ const CategoryProducts = () => {
                                     <h6 className="card-subtitle mb-2 text-muted">
                                         Price:
                                         <img className="price-icon m-1"
-                                             src="https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/icons/euro.svg"/>
+                                             src="https://heal-naturalis-bucket.s3.eu-central-1.amazonaws.com/icons/euro.svg"
+                                        alt="Euro icon"/>
                                         {product.price}
                                     </h6>
                                     <div className="product-characteristics">
